@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-
+from jwt_handler import create_token
 from sqlalchemy.orm import Session
 
 from database import (
@@ -60,7 +60,6 @@ def register(user: UserCreate):
     return {
         "message": "User registered"
     }
-
 @app.post("/login")
 def login(user: UserCreate):
 
@@ -68,14 +67,11 @@ def login(user: UserCreate):
 
     db_user = (
         db.query(User)
-        .filter(
-            User.username == user.username
-        )
+        .filter(User.username == user.username)
         .first()
     )
 
     if not db_user:
-
         raise HTTPException(
             status_code=401,
             detail="User not found"
@@ -85,14 +81,15 @@ def login(user: UserCreate):
         user.password,
         db_user.password
     ):
-
         raise HTTPException(
             status_code=401,
             detail="Wrong password"
         )
 
+    token = create_token(user.username)
+
     db.close()
 
     return {
-        "message": "Login Successful"
+        "access_token": token
     }
