@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from jwt_handler import create_token
 from sqlalchemy.orm import Session
+from fastapi import Depends
+from fastapi import Header
+from jwt_handler import verify_token
 
 from database import (
     SessionLocal,
@@ -63,7 +66,11 @@ def register(user: UserCreate):
 @app.post("/login")
 def login(user: UserCreate):
 
+    print("Step 1")
+
     db: Session = SessionLocal()
+
+    print("Step 2")
 
     db_user = (
         db.query(User)
@@ -71,25 +78,79 @@ def login(user: UserCreate):
         .first()
     )
 
+    print("Step 3")
+
     if not db_user:
         raise HTTPException(
             status_code=401,
             detail="User not found"
         )
 
-    if not verify_password(
+    print("Step 4")
+
+    result = verify_password(
         user.password,
         db_user.password
-    ):
-        raise HTTPException(
-            status_code=401,
-            detail="Wrong password"
-        )
+    )
+
+    print("Password Verify Result:", result)
+
+    print("Step 5")
 
     token = create_token(user.username)
+
+    print("Generated Token:", token)
+
+    print("Step 6")
 
     db.close()
 
     return {
         "access_token": token
     }
+
+    return {
+        "access_token": token
+    }
+def get_current_user(
+    authorization: str = Header(None)
+):
+
+    if authorization is None:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Token Missing"
+        )
+
+    token = authorization.replace(
+        "Bearer ",
+        ""
+    )
+
+    payload = verify_token(token)
+
+    if payload is None:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+
+    return payload
+
+@app.get("/profile")
+def profile(
+    user=Depends(get_current_user)
+):
+
+    return {
+        "message": "Protected Route Accessed",
+        "user": user
+    }
+
+@app.get("/me")
+def get_me(
+    user=Depends(get_current_user)
+):
+    return user
