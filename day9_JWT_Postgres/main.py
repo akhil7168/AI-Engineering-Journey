@@ -1,10 +1,18 @@
-from fastapi import FastAPI
-from fastapi import HTTPException
+from fastapi import (
+    FastAPI,
+    Depends,
+    HTTPException,
+    Header
+)
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import Security
+security = HTTPBearer()
 from jwt_handler import create_token
 from sqlalchemy.orm import Session
-from fastapi import Depends
-from fastapi import Header
 from jwt_handler import verify_token
+from sqlalchemy import Column,Integer,String,ForeignKey
+from models import User, Note
+from schemas import UserCreate, NoteCreate
 
 from database import (
     SessionLocal,
@@ -113,25 +121,17 @@ def login(user: UserCreate):
         "access_token": token
     }
 def get_current_user(
-    authorization: str = Header(None)
+    credentials: HTTPAuthorizationCredentials = Security(security)
 ):
+    print("TOKEN RECEIVED:", credentials.credentials)
 
-    if authorization is None:
-
-        raise HTTPException(
-            status_code=401,
-            detail="Token Missing"
-        )
-
-    token = authorization.replace(
-        "Bearer ",
-        ""
-    )
+    token = credentials.credentials
 
     payload = verify_token(token)
 
-    if payload is None:
+    print("PAYLOAD:", payload)
 
+    if payload is None:
         raise HTTPException(
             status_code=401,
             detail="Invalid Token"
@@ -154,3 +154,67 @@ def get_me(
     user=Depends(get_current_user)
 ):
     return user
+
+@app.get("/notes")
+def get_notes(
+    user=Depends(get_current_user)
+):
+
+    db = SessionLocal()
+
+    username = user["sub"]
+
+    db_user = (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
+    notes = (
+        db.query(Note)
+        .filter(Note.user_id == db_user.id)
+        .all()
+    )
+
+    db.close()
+
+    return notes
+
+@app.post("/notes")
+def create_note(
+    note: NoteCreate,
+    user=Depends(get_current_user)
+):
+
+    db = SessionLocal()
+
+    username = user["sub"]
+
+    db_user = (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
+    new_note = Note(
+        title=note.title,
+        content=note.content,
+        user_id=db_user.id
+    )
+
+    db.add(new_note)
+    db.commit()
+    db.refresh(new_note)
+
+    db.close()
+
+    return {
+        "message": "Note Created"
+    }
+@app.get("/test-header")
+def test_header(
+    authorization: str = Header(None)
+):
+    return {
+        "authorization": authorization
+    }

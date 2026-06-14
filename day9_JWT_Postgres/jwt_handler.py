@@ -29,9 +29,13 @@ def verify_token(token):
             algorithms=[ALGORITHM]
         )
 
+        print("DECODED:", payload)
+
         return payload
 
-    except JWTError:
+    except JWTError as e:
+
+        print("JWT ERROR:", e)
 
         return None
 
