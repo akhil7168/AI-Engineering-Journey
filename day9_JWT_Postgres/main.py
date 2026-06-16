@@ -12,8 +12,7 @@ from sqlalchemy.orm import Session
 from jwt_handler import verify_token
 from sqlalchemy import Column,Integer,String,ForeignKey
 from models import User, Note
-from schemas import UserCreate, NoteCreate
-
+from schemas import UserCreate, NoteCreate, NoteUpdate
 from database import (
     SessionLocal,
     engine,
@@ -136,6 +135,7 @@ def get_current_user(
             status_code=401,
             detail="Invalid Token"
         )
+    print("CURRENT USER:", payload)
 
     return payload
 
@@ -217,4 +217,84 @@ def test_header(
 ):
     return {
         "authorization": authorization
+    }
+
+@app.put("/notes/{note_id}")
+def update_note(
+    note_id: int,
+    note: NoteUpdate,
+    user=Depends(get_current_user)
+):
+    db = SessionLocal()
+
+    username = user["sub"]
+
+    db_user = (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
+    db_note = (
+        db.query(Note)
+        .filter(Note.id == note_id, Note.user_id == db_user.id)
+        .first()
+    )
+
+    if not db_note:
+        raise HTTPException(
+            status_code=404,
+            detail="Note not found"
+        )
+
+    db_note.title = note.title
+    db_note.content = note.content
+
+    db.commit()
+
+    db.close()
+
+    return {
+        "message": "Note Updated"
+    }
+
+@app.delete("/notes/{note_id}")
+def delete_note(
+    note_id: int,
+    user=Depends(get_current_user)
+):
+
+    db = SessionLocal()
+
+    username = user["sub"]
+
+    db_user = (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
+    db_note = (
+        db.query(Note)
+        .filter(
+            Note.id == note_id,
+            Note.user_id == db_user.id
+        )
+        .first()
+    )
+
+    if not db_note:
+        raise HTTPException(
+            status_code=404,
+            detail="Note not found"
+        )
+
+    db.delete(db_note)
+
+    db.commit()
+
+    db.close()
+
+    return {
+        "message": "Note Deleted"
     }
