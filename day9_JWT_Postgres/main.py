@@ -4,6 +4,7 @@ from fastapi import (
     HTTPException,
     Header
 )
+from database import Base, engine, SessionLocal
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Security
 security = HTTPBearer()
@@ -12,16 +13,12 @@ from sqlalchemy.orm import Session
 from jwt_handler import verify_token
 from sqlalchemy import Column,Integer,String,ForeignKey
 from models import User, Note
-from schemas import UserCreate, NoteCreate, NoteUpdate
-from database import (
-    SessionLocal,
-    engine,
-    Base
+from schemas import (
+    UserCreate,
+    NoteCreate,
+    NoteUpdate,
+    NoteResponse
 )
-
-from models import User
-
-from schemas import UserCreate
 
 from auth import (
     hash_password,
@@ -139,6 +136,18 @@ def get_current_user(
 
     return payload
 
+def get_db_user(
+    db,
+    user
+):
+    username = user["sub"]
+
+    return (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
 @app.get("/profile")
 def profile(
     user=Depends(get_current_user)
@@ -155,19 +164,19 @@ def get_me(
 ):
     return user
 
-@app.get("/notes")
+@app.get(
+    "/notes",
+    response_model=list[NoteResponse]
+)
 def get_notes(
     user=Depends(get_current_user)
 ):
 
     db = SessionLocal()
 
-    username = user["sub"]
-
-    db_user = (
-        db.query(User)
-        .filter(User.username == username)
-        .first()
+    db_user = get_db_user(
+    db,
+    user
     )
 
     notes = (
@@ -188,12 +197,9 @@ def create_note(
 
     db = SessionLocal()
 
-    username = user["sub"]
-
-    db_user = (
-        db.query(User)
-        .filter(User.username == username)
-        .first()
+    db_user = get_db_user(
+    db,
+    user
     )
 
     new_note = Note(
@@ -227,12 +233,9 @@ def update_note(
 ):
     db = SessionLocal()
 
-    username = user["sub"]
-
-    db_user = (
-        db.query(User)
-        .filter(User.username == username)
-        .first()
+    db_user = get_db_user(
+    db,
+    user
     )
 
     db_note = (
@@ -266,14 +269,10 @@ def delete_note(
 
     db = SessionLocal()
 
-    username = user["sub"]
-
-    db_user = (
-        db.query(User)
-        .filter(User.username == username)
-        .first()
+    db_user = get_db_user(
+    db,
+    user
     )
-
     db_note = (
         db.query(Note)
         .filter(

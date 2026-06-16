@@ -16,3 +16,12 @@ class NoteCreate(BaseModel):
 class NoteUpdate(BaseModel):
     title: str
     content: str
+
+class NoteResponse(BaseModel):
+    id: int
+    title: str
+    content: str
+    user_id: int
+
+    class Config:
+        from_attributes = True
