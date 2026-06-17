@@ -255,3 +255,18 @@ Created reusable helper function:
 get_db_user()
 
 to eliminate duplicate code.
+
+## Day 15
+
+### Router Refactoring
+
+Implemented:
+- auth_routes.py
+- note_routes.py
+- APIRouter
+- Modular FastAPI structure
+
+Benefits:
+- Cleaner architecture
+- Easier maintenance
+- Scalable project structure
