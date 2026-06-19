@@ -8,7 +8,10 @@ from schemas import (
 )
 from database import SessionLocal
 from auth import get_current_user
-
+from app.services.note_service import (
+    create_note_service,
+    get_notes_service
+)
 
 router = APIRouter(
     tags=["Notes"]
@@ -26,19 +29,18 @@ def get_notes(
     db = SessionLocal()
 
     db_user = get_db_user(
-    db,
-    user
+        db,
+        user
     )
 
-    notes = (
-        db.query(Note)
-        .filter(Note.user_id == db_user.id)
-        .all()
+    result = get_notes_service(
+        db,
+        db_user
     )
 
     db.close()
 
-    return notes
+    return result
 
 @router.post("/notes")
 def create_note(
@@ -49,25 +51,19 @@ def create_note(
     db = SessionLocal()
 
     db_user = get_db_user(
-    db,
-    user
+        db,
+        user
     )
 
-    new_note = Note(
-        title=note.title,
-        content=note.content,
-        user_id=db_user.id
+    result = create_note_service(
+        db,
+        note,
+        db_user
     )
-
-    db.add(new_note)
-    db.commit()
-    db.refresh(new_note)
 
     db.close()
 
-    return {
-        "message": "Note Created"
-    }
+    return result
 
 @router.put("/notes/{note_id}")
 def update_note(

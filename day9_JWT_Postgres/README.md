@@ -270,3 +270,230 @@ Benefits:
 - Cleaner architecture
 - Easier maintenance
 - Scalable project structure
+
+# Day 16 – Service Layer Architecture
+
+## Objective
+
+Refactor the application to separate business logic from API routes by introducing a Service Layer architecture.
+
+---
+
+## What Was Implemented
+
+### Service Layer
+
+Created a dedicated services package:
+
+```text
+app/
+├── routers/
+│   ├── auth_routes.py
+│   └── note_routes.py
+│
+├── services/
+│   ├── auth_service.py
+│   └── note_service.py
+```
+
+---
+
+### Authentication Service
+
+Created `auth_service.py` containing:
+
+* `register_user()`
+* `login_user()`
+
+Responsibilities:
+
+* User registration
+* User validation
+* Password verification
+* JWT token generation
+
+---
+
+### Notes Service
+
+Created `note_service.py` containing:
+
+* `create_note_service()`
+* `get_notes_service()`
+
+Responsibilities:
+
+* Note creation
+* User-specific note retrieval
+* Database operations for notes
+
+---
+
+### Router Refactoring
+
+#### auth_routes.py
+
+Routes now only:
+
+* Receive requests
+* Call service functions
+* Return responses
+
+Business logic moved to:
+
+```python
+auth_service.py
+```
+
+---
+
+#### note_routes.py
+
+Routes now only:
+
+* Authenticate users
+* Call note service functions
+* Return results
+
+Database logic moved to:
+
+```python
+note_service.py
+```
+
+---
+
+## Benefits of Service Layer Architecture
+
+### Separation of Concerns
+
+Before:
+
+```text
+Router
+ └── Business Logic
+      └── Database Queries
+```
+
+After:
+
+```text
+Router
+ └── Service Layer
+      └── Database Queries
+```
+
+---
+
+### Improved Maintainability
+
+* Cleaner route files
+* Easier debugging
+* Easier testing
+* Easier feature additions
+
+---
+
+### Industry Standard Design
+
+This architecture follows common FastAPI backend patterns used in:
+
+* Production APIs
+* SaaS Applications
+* Enterprise Backend Systems
+* AI Microservices
+
+---
+
+## Technologies Used
+
+* FastAPI
+* PostgreSQL
+* SQLAlchemy ORM
+* JWT Authentication
+* Passlib/Bcrypt
+* APIRouter
+* Service Layer Pattern
+
+---
+
+## Features Working
+
+### Authentication
+
+* User Registration
+* User Login
+* JWT Token Generation
+* Protected Routes
+
+### Notes
+
+* Create Note
+* Get User Notes
+* Update Note
+* Delete Note
+* Ownership Validation
+
+### Documentation
+
+* Swagger UI
+* Request Validation
+* Response Models
+
+---
+
+## Git Commit
+
+```bash
+git commit -m "Day16 service layer architecture completed"
+```
+
+---
+
+## Status
+
+Day 16 Completed Successfully
+
+Current Architecture:
+
+```text
+Client
+  ↓
+Router
+  ↓
+Service
+  ↓
+Database
+```
+
+Ready for:
+
+* Day 17: Environment Variables (.env)
+* Day 18: Configuration Management
+* Day 19: Exception Handling
+* Day 20: Dockerizing FastAPI
+
+```
+```
+## Day 17
+
+### Environment Variables
+
+Implemented:
+
+- python-dotenv
+- .env file
+- Secret management
+- Database URL configuration
+
+### Files Updated
+
+- database.py
+- jwt_handler.py
+- .gitignore
+
+### Benefits
+
+- Secure credentials
+- Production readiness
+- Easier deployment
