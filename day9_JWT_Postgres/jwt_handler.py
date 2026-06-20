@@ -1,17 +1,13 @@
 from jose import jwt
 from datetime import datetime,timedelta
 from jose import JWTError
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
-SECRET_KEY = os.getenv(
-    "SECRET_KEY"
-)
+from app.core.config import settings
 
-ALGORITHM = os.getenv(
-    "ALGORITHM"
-)
+SECRET_KEY = settings.SECRET_KEY
+
+ALGORITHM = settings.ALGORITHM
+
 
 def create_token(username):
 
