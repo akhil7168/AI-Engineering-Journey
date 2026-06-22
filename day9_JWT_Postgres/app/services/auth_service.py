@@ -7,6 +7,12 @@ from auth import (
 )
 from jwt_handler import create_token
 
+from app.exceptions.custom_exceptions import (
+    UserAlreadyExistsException,
+    UserNotFoundException,
+    InvalidCredentialsException
+)
+
 def register_user(
     db,
     user
@@ -22,10 +28,7 @@ def register_user(
 
     if existing_user:
 
-        raise HTTPException(
-            status_code=400,
-            detail="User already exists"
-        )
+        raise UserAlreadyExistsException()
 
     new_user = User(
         username=user.username,
@@ -58,21 +61,13 @@ def login_user(
     )
 
     if not db_user:
-
-        raise HTTPException(
-            status_code=401,
-            detail="User not found"
-        )
+        raise UserNotFoundException()
 
     if not verify_password(
         user.password,
         db_user.password
     ):
-
-        raise HTTPException(
-            status_code=401,
-            detail="Wrong password"
-        )
+        raise InvalidCredentialsException()
 
     token = create_token(
         user.username

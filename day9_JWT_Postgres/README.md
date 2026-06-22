@@ -521,3 +521,28 @@ Benefits:
 - Cleaner imports
 - Better scalability
 - Simplified deployment
+
+
+## Day 19
+
+### Global Exception Handling
+
+Created:
+
+- custom_exceptions.py
+- handlers.py
+
+Implemented:
+
+- UserAlreadyExistsException
+- UserNotFoundException
+- InvalidCredentialsException
+- InvalidTokenException
+- NoteNotFoundException
+
+Benefits:
+
+- Cleaner code
+- Centralized error handling
+- Consistent API responses
+- Production-ready architecture
