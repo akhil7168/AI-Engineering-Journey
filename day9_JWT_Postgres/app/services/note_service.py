@@ -4,6 +4,9 @@ from models import (
     User,
     Note
 )
+from app.exceptions.custom_exceptions import (
+    NoteNotFoundException
+)
 
 def create_note_service(
     db,

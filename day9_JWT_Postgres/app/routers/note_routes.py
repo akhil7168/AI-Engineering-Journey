@@ -12,6 +12,9 @@ from app.services.note_service import (
     create_note_service,
     get_notes_service
 )
+from app.exceptions.custom_exceptions import (
+    NoteNotFoundException
+)
 
 router = APIRouter(
     tags=["Notes"]
@@ -85,10 +88,7 @@ def update_note(
     )
 
     if not db_note:
-        raise HTTPException(
-            status_code=404,
-            detail="Note not found"
-        )
+        raise NoteNotFoundException()
 
     db_note.title = note.title
     db_note.content = note.content
@@ -123,10 +123,7 @@ def delete_note(
     )
 
     if not db_note:
-        raise HTTPException(
-            status_code=404,
-            detail="Note not found"
-        )
+        raise NoteNotFoundException()
 
     db.delete(db_note)
 

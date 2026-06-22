@@ -4,6 +4,9 @@ from fastapi import HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Security
 from jwt_handler import verify_token
+from app.exceptions.custom_exceptions import (
+    InvalidTokenException
+)
 
 security = HTTPBearer()
 
@@ -36,9 +39,6 @@ def get_current_user(
     payload = verify_token(token)
 
     if payload is None:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid Token"
-        )
+       raise InvalidTokenException()
 
     return payload
