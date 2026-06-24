@@ -12,6 +12,8 @@ class User(Base):
 
     password = Column(String)
 
+    email = Column(String, unique=True, nullable=True)
+
     notes = relationship(
     "Note",
     back_populates="owner"

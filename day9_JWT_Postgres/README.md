@@ -546,3 +546,23 @@ Benefits:
 - Centralized error handling
 - Consistent API responses
 - Production-ready architecture
+
+## Day 20 - Dockerization
+
+### Completed
+- Created Dockerfile
+- Containerized FastAPI application
+- Connected FastAPI container to PostgreSQL
+- Configured environment variables
+- Built Docker image
+- Ran application inside Docker
+
+### Run
+
+docker build -t notes-api .
+
+docker run -d -p 8000:8000 notes-api
+
+### Swagger
+
+http://localhost:8000/docs
