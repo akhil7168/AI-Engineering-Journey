@@ -566,3 +566,16 @@ docker run -d -p 8000:8000 notes-api
 ### Swagger
 
 http://localhost:8000/docs
+
+
+## Running Tests
+
+```bash
+pytest
+```
+
+Run a specific test:
+
+```bash
+pytest tests/test_auth.py -v
+```
