@@ -15,6 +15,7 @@ from app.services.note_service import (
 from app.exceptions.custom_exceptions import (
     NoteNotFoundException
 )
+from app.core.roles import require_admin
 
 router = APIRouter(
     tags=["Notes"]
@@ -44,6 +45,12 @@ def get_notes(
     db.close()
 
     return result
+
+@router.get("/admin")
+def admin_dashboard(current_user=Depends(require_admin)):
+    return {
+        "message": "Welcome Admin"
+    }
 
 @router.post("/notes")
 def create_note(

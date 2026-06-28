@@ -29,13 +29,14 @@ def register_user(
     if existing_user:
 
         raise UserAlreadyExistsException()
+    
+    hashed_password = hash_password(user.password)
 
     new_user = User(
-        username=user.username,
-        password=hash_password(
-            user.password
-        )
-    )
+    username=user.username,
+    password=hashed_password,
+    role="user"
+)
 
     db.add(new_user)
 

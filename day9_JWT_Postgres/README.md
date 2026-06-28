@@ -579,3 +579,12 @@ Run a specific test:
 ```bash
 pytest tests/test_auth.py -v
 ```
+
+## Day 24 – Role-Based Access Control (RBAC)
+
+### Features
+- Added role column to users
+- Admin/User roles
+- Authorization dependency
+- Protected admin endpoint
+- RBAC tests

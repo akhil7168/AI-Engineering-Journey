@@ -14,6 +14,8 @@ class User(Base):
 
     email = Column(String, unique=True, nullable=True)
 
+    role = Column(String, default="user")
+
     notes = relationship(
     "Note",
     back_populates="owner"
