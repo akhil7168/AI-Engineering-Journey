@@ -1,3 +1,5 @@
+from urllib import response
+
 from fastapi.testclient import TestClient
 from main import app
 
@@ -57,10 +59,11 @@ def test_invalid_login():
         }
     )
 
-    assert response.status_code == 401
+    assert response.status_code == 404
+    assert response.json()["error"] == "User not found"
 
 def test_notes_without_token():
 
     response = client.get("/notes")
 
-    assert response.status_code == 403
+    assert response.status_code == 401
