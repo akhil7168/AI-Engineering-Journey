@@ -48,18 +48,21 @@ def register_user(
         "message": "User registered"
     }
 
-def login_user(
-    db,
-    user
-):
+def login_user(db, user):
+
+    print("=" * 60)
+    print("INPUT USERNAME:", repr(user.username))
+
+    users = db.query(User).all()
+    print("ALL USERS:", [(u.id, u.username) for u in users])
 
     db_user = (
         db.query(User)
-        .filter(
-            User.username == user.username
-        )
+        .filter(User.username == user.username)
         .first()
     )
+
+    print("MATCHED USER:", db_user)
 
     if not db_user:
         raise UserNotFoundException()
@@ -70,9 +73,7 @@ def login_user(
     ):
         raise InvalidCredentialsException()
 
-    token = create_token(
-        user.username
-    )
+    token = create_token(user.username)
 
     return {
         "access_token": token

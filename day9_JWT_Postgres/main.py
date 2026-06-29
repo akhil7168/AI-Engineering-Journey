@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
-from database import Base, engine
+from database import Base, engine, SessionLocal
+from models import User, Note
 
 from app.routers.auth_routes import router as auth_router
 from app.routers.note_routes import router as note_router
@@ -53,4 +54,23 @@ app.include_router(auth_router)
 app.include_router(note_router)
 
 # Create Database Tables
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
+
+@app.get("/debug/users")
+def debug_users():
+    db = SessionLocal()
+
+    users = db.query(User).all()
+
+    data = [
+        {
+            "id": u.id,
+            "username": u.username,
+            "role": u.role
+        }
+        for u in users
+    ]
+
+    db.close()
+
+    return data
