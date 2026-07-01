@@ -51,10 +51,17 @@ def register_user(
 def login_user(db, user):
 
     print("=" * 60)
+    print("DATABASE URL:")
+    print(db.bind.url)
+
+    print("=" * 60)
     print("INPUT USERNAME:", repr(user.username))
 
     users = db.query(User).all()
-    print("ALL USERS:", [(u.id, u.username) for u in users])
+
+    print("=" * 60)
+    print("ALL USERS IN DATABASE:")
+    print([(u.id, u.username, u.role) for u in users])
 
     db_user = (
         db.query(User)
@@ -62,18 +69,18 @@ def login_user(db, user):
         .first()
     )
 
+    print("=" * 60)
     print("MATCHED USER:", db_user)
 
     if not db_user:
         raise UserNotFoundException()
 
-    if not verify_password(
-        user.password,
-        db_user.password
-    ):
+    if not verify_password(user.password, db_user.password):
         raise InvalidCredentialsException()
 
-    token = create_token(user.username)
+    token = create_token(
+        db_user.username
+    )
 
     return {
         "access_token": token
