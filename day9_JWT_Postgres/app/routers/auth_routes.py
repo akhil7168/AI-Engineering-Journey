@@ -35,6 +35,8 @@ def register(user: UserCreate):
 @router.post("/login")
 def login(user: UserCreate):
 
+    print(">>>>>>>> LOGIN ROUTE CALLED <<<<<<<<")
+
     db = SessionLocal()
 
     result = login_user(
