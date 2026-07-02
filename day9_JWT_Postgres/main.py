@@ -74,3 +74,29 @@ def debug_users():
     db.close()
 
     return data
+
+
+@app.post("/debug/make-admin/{username}")
+def make_admin(username: str):
+    db = SessionLocal()
+
+    user = (
+        db.query(User)
+        .filter(User.username == username)
+        .first()
+    )
+
+    if not user:
+        db.close()
+        return {"error": "User not found"}
+
+    user.role = "admin"
+
+    db.commit()
+    db.refresh(user)
+
+    db.close()
+
+    return {
+        "message": f"{username} is now admin"
+    }
