@@ -76,8 +76,8 @@ def debug_users():
     return data
 
 
-@app.post("/debug/make-admin/{username}")
-def make_admin(username: str):
+@app.post("/debug/promote/{username}")
+def promote(username: str):
     db = SessionLocal()
 
     user = (
@@ -95,8 +95,12 @@ def make_admin(username: str):
     db.commit()
     db.refresh(user)
 
+    result = {
+        "id": user.id,
+        "username": user.username,
+        "role": user.role
+    }
+
     db.close()
 
-    return {
-        "message": f"{username} is now admin"
-    }
+    return result
