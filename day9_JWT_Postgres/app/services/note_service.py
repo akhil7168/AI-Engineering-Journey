@@ -28,9 +28,10 @@ def create_note_service(
     db.commit()
 
     db.refresh(new_note)
-
     cache_key = f"notes_{db_user.id}"
     redis_client.delete(cache_key)
+    print("CACHE INVALIDATED")
+
 
     return {
         "message": "Note Created"
@@ -58,13 +59,14 @@ def get_notes_service(db, db_user):
 
     # Convert SQLAlchemy objects to dictionaries
     notes_data = [
-        {
-            "id": note.id,
-            "title": note.title,
-            "content": note.content
-        }
-        for note in notes
-    ]
+    {
+        "id": note.id,
+        "title": note.title,
+        "content": note.content,
+        "user_id": note.user_id
+    }
+    for note in notes
+]
 
     # Store in Redis for 60 seconds
     redis_client.setex(

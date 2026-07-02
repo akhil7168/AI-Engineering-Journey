@@ -102,6 +102,10 @@ def update_note(
 
     db.commit()
 
+    cache_key = f"notes_{db_user.id}"
+    redis_client.delete(cache_key)
+    print("CACHE INVALIDATED")
+
     db.close()
 
     return {
@@ -135,6 +139,9 @@ def delete_note(
     db.delete(db_note)
 
     db.commit()
+    cache_key = f"notes_{db_user.id}"
+    redis_client.delete(cache_key)
+    print("CACHE INVALIDATED")
 
     db.close()
 
