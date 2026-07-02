@@ -54,49 +54,5 @@ app.include_router(auth_router)
 app.include_router(note_router)
 
 # Create Database Tables
-#Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
-@app.get("/debug/users")
-def debug_users():
-    db = SessionLocal()
-
-    users = db.query(User).all()
-
-    data = [
-        {
-            "id": u.id,
-            "username": u.username,
-            "role": u.role
-        }
-        for u in users
-    ]
-
-    db.close()
-
-    return data
-
-
-@app.post("/debug/make-admin/{username}")
-def make_admin(username: str):
-    db = SessionLocal()
-
-    user = (
-        db.query(User)
-        .filter(User.username == username)
-        .first()
-    )
-
-    if not user:
-        db.close()
-        return {"error": "User not found"}
-
-    user.role = "admin"
-
-    db.commit()
-    db.refresh(user)
-
-    db.close()
-
-    return {
-        "message": f"{username} is now admin"
-    }
