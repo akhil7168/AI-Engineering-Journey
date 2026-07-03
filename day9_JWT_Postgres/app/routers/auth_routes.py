@@ -10,6 +10,8 @@ from app.services.auth_service import (
     register_user,
     login_user
 )
+from fastapi import BackgroundTasks
+from app.tasks.background_tasks import send_email
 
 
 router = APIRouter(
@@ -26,7 +28,6 @@ def register(user: UserCreate):
         db,
         user
     )
-
     db.close()
 
     return result

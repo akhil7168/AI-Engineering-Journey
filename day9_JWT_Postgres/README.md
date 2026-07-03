@@ -588,3 +588,41 @@ pytest tests/test_auth.py -v
 - Authorization dependency
 - Protected admin endpoint
 - RBAC tests
+
+
+# Day 27 – Background Tasks
+
+## Features
+
+- FastAPI BackgroundTasks
+- Non-blocking Email Simulation
+- Activity Logging
+- Async Processing
+
+## Workflow
+
+Client
+
+↓
+
+POST /register
+
+↓
+
+User Created
+
+↓
+
+Response Returned
+
+↓
+
+Background Tasks
+
+↓
+
+Email
+
+↓
+
+Logs
