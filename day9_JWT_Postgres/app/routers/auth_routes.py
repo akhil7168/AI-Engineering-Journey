@@ -12,7 +12,8 @@ from app.services.auth_service import (
 )
 from fastapi import BackgroundTasks
 from app.tasks.background_tasks import send_email
-
+from fastapi import Request
+from app.core.limiter import limiter
 
 router = APIRouter(
     prefix="/auth",
@@ -20,7 +21,12 @@ router = APIRouter(
 )
 
 @router.post("/register")
-def register(user: UserCreate):
+@limiter.limit("3/minute")
+def register(
+    request: Request,
+    user: UserCreate,
+    background_tasks: BackgroundTasks
+):
 
     db = SessionLocal()
 
@@ -28,13 +34,24 @@ def register(user: UserCreate):
         db,
         user
     )
+
     db.close()
+
+    # Execute after response is sent
+    background_tasks.add_task(
+        send_email,
+        user.username
+    )
 
     return result
 
 
 @router.post("/login")
-def login(user: UserCreate):
+@limiter.limit("5/minute")
+def login(
+    request: Request,
+    user: UserCreate
+):
 
     print(">>>>>>>> LOGIN ROUTE CALLED <<<<<<<<")
 

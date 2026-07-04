@@ -626,3 +626,19 @@ Email
 ↓
 
 Logs
+
+# Day 28 – API Security
+
+## Features
+
+- Login Rate Limiting
+- Registration Rate Limiting
+- CORS Configuration
+- Trusted Host Middleware
+- Security Headers
+
+## Protection
+
+- Brute Force Prevention
+- Spam Registration Prevention
+- Browser Security
