@@ -8,58 +8,34 @@ from app.exceptions.custom_exceptions import (
     InvalidTokenException,
     NoteNotFoundException
 )
+from app.core.logging_config import logger
 
 async def user_exists_handler(
     request: Request,
     exc: UserAlreadyExistsException
 ):
-    return JSONResponse(
-        status_code=400,
-        content={
-            "error": "User already exists"
-        }
-    )
+    logger.warning("User already exists")
 
 async def user_not_found_handler(
     request: Request,
     exc: UserNotFoundException
 ):
-    return JSONResponse(
-        status_code=404,
-        content={
-            "error": "User not found"
-        }
-    )
+    logger.warning("User not found")
 
 async def invalid_credentials_handler(
     request: Request,
     exc: InvalidCredentialsException
 ):
-    return JSONResponse(
-        status_code=401,
-        content={
-            "error": "Invalid credentials"
-        }
-    )
+    logger.warning("Invalid credentials")
 
 async def invalid_token_handler(
     request: Request,
     exc: InvalidTokenException
 ):
-    return JSONResponse(
-        status_code=401,
-        content={
-            "error": "Invalid token"
-        }
-    )
+    logger.warning("Invalid token")
 
 async def note_not_found_handler(
     request: Request,
     exc: NoteNotFoundException
 ):
-    return JSONResponse(
-        status_code=404,
-        content={
-            "error": "Note not found"
-        }
-    )
+    logger.warning("Note not found")

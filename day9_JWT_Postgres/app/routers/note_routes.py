@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from app.core.logging_config import logger
 
 from models import User, Note
 from schemas import (
@@ -16,6 +17,7 @@ from app.exceptions.custom_exceptions import (
     NoteNotFoundException
 )
 from app.core.roles import require_admin
+from app.core.redis import redis_client
 
 router = APIRouter(
     tags=["Notes"]
@@ -104,7 +106,7 @@ def update_note(
 
     cache_key = f"notes_{db_user.id}"
     redis_client.delete(cache_key)
-    print("CACHE INVALIDATED")
+    logger.info("CACHE INVALIDATED")
 
     db.close()
 
@@ -141,7 +143,7 @@ def delete_note(
     db.commit()
     cache_key = f"notes_{db_user.id}"
     redis_client.delete(cache_key)
-    print("CACHE INVALIDATED")
+    logger.info("CACHE INVALIDATED")
 
     db.close()
 
