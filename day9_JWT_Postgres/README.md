@@ -642,3 +642,22 @@ Logs
 - Brute Force Prevention
 - Spam Registration Prevention
 - Browser Security
+
+
+# Day 29 – Logging & Monitoring
+
+## Features
+
+- Console Logging
+- File Logging
+- Authentication Logs
+- Notes Activity Logs
+- Exception Logs
+- Request Logging Middleware
+
+## Log Levels
+
+- DEBUG
+- INFO
+- WARNING
+- ERROR
