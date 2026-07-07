@@ -26,6 +26,8 @@ router = APIRouter(
 
 @router.get(
     "/notes",
+    summary="Get all notes",
+    description="Returns all notes belonging to the authenticated user.",
     response_model=list[NoteResponse]
 )
 def get_notes(
@@ -48,13 +50,22 @@ def get_notes(
 
     return result
 
-@router.get("/admin")
+@router.get(
+    "/admin",
+    summary="Admin dashboard",
+    description="Accessible only to users with the admin role."
+)
 def admin_dashboard(current_user=Depends(require_admin)):
     return {
         "message": "Welcome Admin"
     }
 
-@router.post("/notes")
+@router.post(
+    "/notes",
+    summary="Create note",
+    description="Creates a new note for the logged-in user.",
+    status_code=201
+)
 def create_note(
     note: NoteCreate,
     user=Depends(get_current_user)
@@ -77,7 +88,11 @@ def create_note(
 
     return result
 
-@router.put("/notes/{note_id}")
+@router.put(
+    "/notes/{note_id}",
+    summary="Update note",
+    description="Updates a specific note owned by the authenticated user."
+)
 def update_note(
     note_id: int,
     note: NoteUpdate,
@@ -114,7 +129,11 @@ def update_note(
         "message": "Note Updated"
     }
 
-@router.delete("/notes/{note_id}")
+@router.delete(
+    "/notes/{note_id}",
+    summary="Delete note",
+    description="Deletes a note owned by the authenticated user."
+)
 def delete_note(
     note_id: int,
     user=Depends(get_current_user)
