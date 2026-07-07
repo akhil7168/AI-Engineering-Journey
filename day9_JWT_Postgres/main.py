@@ -27,9 +27,32 @@ from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from app.routers.admin_routes import router as admin_router
 
-app = FastAPI()
+app = FastAPI(
+    title="AI Engineering Notes API",
+    description="""
+Production-ready Notes API built using FastAPI.
 
+Features:
+- JWT Authentication
+- Role Based Access Control (RBAC)
+- PostgreSQL Database
+- Redis Caching
+- Background Tasks
+- Rate Limiting
+- Logging & Monitoring
+- Docker & Render Deployment
+""",
+    version="1.0.0",
+    contact={
+        "name": "Akhil Reddy",
+        "email": "akhilpunyala@gmail.com"
+    },
+    license_info={
+        "name": "MIT License"
+    }
+)
 
 app.state.limiter = limiter
 
@@ -68,6 +91,7 @@ app.add_exception_handler(
 # Register Routers
 app.include_router(auth_router)
 app.include_router(note_router)
+app.include_router(admin_router)
 
 # Create Database Tables
 Base.metadata.create_all(bind=engine)

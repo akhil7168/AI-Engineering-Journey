@@ -20,7 +20,16 @@ router = APIRouter(
     tags=["Authentication"]
 )
 
-@router.post("/register")
+@router.post(
+    "/register",
+    summary="Authenticate user",
+    responses={
+        200: {"description": "Login successful"},
+        401: {"description": "Invalid credentials"},
+        404: {"description": "User not found"},
+        429: {"description": "Too many login attempts"}
+    }
+)
 @limiter.limit("3/minute")
 def register(
     request: Request,
@@ -46,14 +55,16 @@ def register(
     return result
 
 
-@router.post("/login")
+@router.post(
+    "/login",
+    summary="Authenticate user",
+    description="Validates username and password and returns a JWT access token."
+)
 @limiter.limit("5/minute")
 def login(
     request: Request,
     user: UserCreate
 ):
-
-    print(">>>>>>>> LOGIN ROUTE CALLED <<<<<<<<")
 
     db = SessionLocal()
 
