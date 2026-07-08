@@ -28,6 +28,7 @@ from slowapi import _rate_limit_exceeded_handler
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from app.routers.admin_routes import router as admin_router
+from app.routers.ai_routes import router as ai_router
 
 app = FastAPI(
     title="AI Engineering Notes API",
@@ -92,6 +93,7 @@ app.add_exception_handler(
 app.include_router(auth_router)
 app.include_router(note_router)
 app.include_router(admin_router)
+app.include_router(ai_router)
 
 # Create Database Tables
 Base.metadata.create_all(bind=engine)
