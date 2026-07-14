@@ -1,28 +1,27 @@
 from openai import OpenAI
 
-from app.config import settings
-
 client = OpenAI(
-    api_key=settings.OPENROUTER_API_KEY,
-    base_url=settings.OPENROUTER_BASE_URL
+    base_url="http://localhost:11434/v1",
+    api_key="ollama"
 )
 
+MODEL_NAME = "gemma3:1b"
 
-def chat_with_ai(prompt: str):
+
+def chat_with_ai(system_prompt: str, user_prompt: str):
 
     response = client.chat.completions.create(
-        model=settings.OPENROUTER_MODEL,
+        model=MODEL_NAME,
         messages=[
             {
                 "role": "system",
-                "content": "You are a helpful AI assistant."
+                "content": system_prompt
             },
             {
                 "role": "user",
-                "content": prompt
+                "content": user_prompt
             }
         ],
-        max_tokens=300,
         temperature=0.7
     )
 
