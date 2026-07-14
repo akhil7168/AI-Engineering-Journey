@@ -1,19 +1,28 @@
 from fastapi import APIRouter
+
 from schemas import ChatRequest
-from app.ai.client import chat_with_ai
+
+from app.services.ai_service import generate_ai_response
 
 router = APIRouter(
     prefix="/ai",
-    tags=["Artificial Intelligence"]
+    tags=["AI"]
 )
 
-@router.post("/chat")
-async def chat(chat_request: ChatRequest):
 
-    response = chat_with_ai(
-        prompt=chat_request.prompt
+@router.post(
+    "/chat",
+    summary="Chat with Local AI",
+    description="Interact with the local Ollama model using different AI personalities."
+)
+async def chat(request: ChatRequest):
+
+    response = generate_ai_response(
+        prompt=request.prompt,
+        mode=request.mode
     )
 
     return {
+        "mode": request.mode,
         "response": response
     }

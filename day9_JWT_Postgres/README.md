@@ -661,3 +661,150 @@ Logs
 - INFO
 - WARNING
 - ERROR
+
+
+# AI Engineering Journey
+
+A production-style FastAPI backend built while learning AI Engineering.
+
+---
+
+## Features
+
+- JWT Authentication
+- User Registration & Login
+- Notes CRUD API
+- Role-Based Authorization
+- Redis Caching
+- Background Tasks
+- Email Notifications
+- Logging
+- Rate Limiting
+- API Documentation
+- Local AI Integration using Ollama
+- Prompt Engineering
+
+---
+
+## Tech Stack
+
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Redis
+- Docker
+- JWT
+- Ollama
+- OpenAI SDK
+
+---
+
+## AI Features
+
+The project integrates a local Large Language Model using Ollama.
+
+Supported AI Modes:
+
+- general
+- backend
+- python
+- interviewer
+
+---
+
+## Install Ollama
+
+Download:
+
+https://ollama.com
+
+Pull model
+
+```bash
+ollama pull llama3.2:3b
+```
+
+Run
+
+```bash
+ollama run llama3.2:3b
+```
+
+---
+
+## Run Backend
+
+```bash
+uvicorn main:app --reload
+```
+
+---
+
+## AI Endpoint
+
+POST
+
+```
+/ai/chat
+```
+
+Request
+
+```json
+{
+    "prompt":"Explain JWT",
+    "mode":"backend"
+}
+```
+
+Response
+
+```json
+{
+    "mode":"backend",
+    "response":"JWT stands for JSON Web Token..."
+}
+```
+
+---
+
+## Project Structure
+
+```
+app
+│
+├── ai
+│   ├── client.py
+│   ├── prompts.py
+│
+├── services
+│   ├── ai_service.py
+│   ├── auth_service.py
+│   └── note_service.py
+│
+├── routers
+│   ├── ai_routes.py
+│   ├── auth_routes.py
+│   └── note_routes.py
+│
+├── core
+├── exceptions
+├── models.py
+├── schemas.py
+└── main.py
+```
+
+---
+
+## Future Work
+
+- Conversation Memory
+- RAG
+- ChromaDB
+- FAISS
+- LangChain
+- AI Agents
+- Tool Calling
+- MCP
+- Multi-Agent Systems
