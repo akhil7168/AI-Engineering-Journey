@@ -38,3 +38,51 @@
 2026-07-14 16:10:44,896 | INFO | Prompt Template Selected
 2026-07-14 16:16:42,121 | INFO | AI Response Generated Successfully
 2026-07-14 16:16:42,134 | INFO | ============================================================
+2026-07-15 16:34:54,565 | INFO | ============================================================
+2026-07-15 16:34:54,568 | INFO | NEW AI REQUEST
+2026-07-15 16:34:54,568 | INFO | Session ID : chat1
+2026-07-15 16:34:54,568 | INFO | Mode       : backend
+2026-07-15 16:34:54,569 | INFO | System Prompt Selected
+2026-07-15 16:34:54,594 | INFO | No conversation found for session chat1
+2026-07-15 16:34:54,594 | INFO | Conversation Loaded (0 messages)
+2026-07-15 16:34:54,594 | INFO | Sending 2 messages to AI
+2026-07-15 16:34:59,731 | ERROR | AI Error : Error code: 404 - {'error': {'message': "model 'gemma3:1b' not found", 'type': 'not_found_error', 'param': None, 'code': None}}
+2026-07-15 16:40:17,932 | INFO | ============================================================
+2026-07-15 16:40:17,934 | INFO | NEW AI REQUEST
+2026-07-15 16:40:17,935 | INFO | Session ID : chat1
+2026-07-15 16:40:17,936 | INFO | Mode       : backend
+2026-07-15 16:40:17,936 | INFO | System Prompt Selected
+2026-07-15 16:40:17,957 | INFO | No conversation found for session chat1
+2026-07-15 16:40:17,957 | INFO | Conversation Loaded (0 messages)
+2026-07-15 16:40:17,958 | INFO | Sending 2 messages to AI
+2026-07-15 16:44:04,329 | INFO | AI Response Generated
+2026-07-15 16:44:04,420 | INFO | Conversation saved for session chat1
+2026-07-15 16:44:04,421 | INFO | Conversation Saved
+2026-07-15 16:44:04,422 | INFO | ============================================================
+2026-07-15 16:45:08,313 | INFO | ============================================================
+2026-07-15 16:45:08,318 | INFO | NEW AI REQUEST
+2026-07-15 16:45:08,318 | INFO | Session ID : chat1
+2026-07-15 16:45:08,318 | INFO | Mode       : backend
+2026-07-15 16:45:08,319 | INFO | System Prompt Selected
+2026-07-15 16:45:08,387 | INFO | Conversation loaded for session chat1
+2026-07-15 16:45:08,388 | INFO | Conversation Loaded (2 messages)
+2026-07-15 16:45:08,389 | INFO | Sending 4 messages to AI
+2026-07-15 16:46:18,355 | INFO | AI Response Generated
+2026-07-15 16:46:18,374 | INFO | Conversation saved for session chat1
+2026-07-15 16:46:18,377 | INFO | Conversation Saved
+2026-07-15 16:46:18,377 | INFO | ============================================================
+2026-07-15 16:46:48,074 | INFO | ============================================================
+2026-07-15 16:46:48,090 | INFO | NEW AI REQUEST
+2026-07-15 16:46:48,091 | INFO | Session ID : chat2
+2026-07-15 16:46:48,092 | INFO | Mode       : general
+2026-07-15 16:46:48,093 | INFO | System Prompt Selected
+2026-07-15 16:46:48,150 | INFO | No conversation found for session chat2
+2026-07-15 16:46:48,150 | INFO | Conversation Loaded (0 messages)
+2026-07-15 16:46:48,153 | INFO | Sending 2 messages to AI
+2026-07-15 16:47:24,320 | INFO | AI Response Generated
+2026-07-15 16:47:24,395 | INFO | Conversation saved for session chat2
+2026-07-15 16:47:24,397 | INFO | Conversation Saved
+2026-07-15 16:47:24,398 | INFO | ============================================================
+2026-07-15 16:49:01,622 | INFO | Conversation loaded for session chat1
+2026-07-15 16:49:24,964 | INFO | Conversation deleted for session chat1
+2026-07-15 16:49:34,720 | INFO | No conversation found for session chat1
