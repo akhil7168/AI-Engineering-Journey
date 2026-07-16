@@ -808,3 +808,496 @@ app
 - Tool Calling
 - MCP
 - Multi-Agent Systems
+
+
+## day 33
+
+## Conversation Memory
+
+The AI supports multi-turn conversations.
+
+Each conversation is identified by a unique `session_id`.
+
+Conversation history is stored in Redis and automatically loaded before sending requests to the AI model.
+
+## AI APIs
+
+### Chat
+
+POST
+
+```
+/ai/chat
+```
+
+Request
+
+```json
+{
+    "session_id":"chat1",
+    "prompt":"Explain JWT",
+    "mode":"backend"
+}
+```
+
+---
+
+### Get History
+
+GET
+
+```
+/ai/history/{session_id}
+```
+
+---
+
+### Delete History
+
+DELETE
+
+```
+/ai/history/{session_id}
+```
+
+## Redis
+
+Redis is used for:
+
+- Notes caching
+- Conversation memory
+
+## AI Modes
+
+- general
+- backend
+- python
+- interviewer
+
+# AI Engineering Journey - FastAPI Notes API with AI Assistant
+
+## Project Overview
+
+This project is a production-style FastAPI backend developed as part of my AI Engineering Journey.
+
+It began as a Notes Management API and has evolved into an AI-powered backend supporting:
+
+- JWT Authentication
+- Role-Based Authorization
+- PostgreSQL Database
+- Redis Caching
+- AI Chat Assistant
+- Persistent Conversation Memory
+- Background Tasks
+- Logging
+- Rate Limiting
+- Docker Integration
+
+---
+
+# Features
+
+## Authentication
+
+- User Registration
+- User Login
+- JWT Token Authentication
+- Password Hashing using bcrypt
+
+---
+
+## Notes Module
+
+- Create Note
+- Get Notes
+- Update Note
+- Delete Note
+
+Redis is used to cache notes for improved response times.
+
+---
+
+## AI Assistant
+
+Supports multiple AI modes:
+
+- General Assistant
+- Backend Development
+- Python Programming
+- Technical Interview Preparation
+
+The AI is powered by a locally hosted Ollama model.
+
+---
+
+## Persistent Conversation Memory
+
+Conversation history is permanently stored in PostgreSQL while Redis acts as a high-speed cache.
+
+Architecture:
+
+```
+User
+
+↓
+
+FastAPI
+
+↓
+
+Redis Cache
+
+↓
+
+PostgreSQL
+
+↓
+
+Ollama
+```
+
+Benefits:
+
+- Multi-turn conversations
+- Persistent chat history
+- Automatic Redis cache refresh
+- Faster repeated requests
+
+---
+
+# Conversation APIs
+
+## Chat with AI
+
+POST
+
+```
+/ai/chat
+```
+
+Example Request
+
+```json
+{
+    "session_id": "chat1",
+    "prompt": "Explain JWT Authentication",
+    "mode": "backend"
+}
+```
+
+---
+
+## Get Cached Conversation
+
+GET
+
+```
+/ai/history/{session_id}
+```
+
+Returns the conversation currently stored in Redis.
+
+---
+
+## Clear Cached Conversation
+
+DELETE
+
+```
+/ai/history/{session_id}
+```
+
+Deletes the Redis cache for the session.
+
+---
+
+## List All Conversations
+
+GET
+
+```
+/ai/conversations
+```
+
+Returns every conversation stored in PostgreSQL.
+
+---
+
+## Get Conversation
+
+GET
+
+```
+/ai/conversation/{session_id}
+```
+
+Returns the complete conversation history from PostgreSQL.
+
+---
+
+## Delete Conversation
+
+DELETE
+
+```
+/ai/conversation/{session_id}
+```
+
+Deletes conversation from:
+
+- PostgreSQL
+- Redis Cache
+
+---
+
+# Redis Usage
+
+Redis is used for:
+
+- Notes Cache
+- Conversation Cache
+
+Cache Strategy:
+
+```
+Redis
+
+↓
+
+Cache Miss
+
+↓
+
+PostgreSQL
+
+↓
+
+Refresh Redis
+
+↓
+
+Return Response
+```
+
+---
+
+# PostgreSQL Tables
+
+Current tables:
+
+- users
+- notes
+- conversations
+- chat_messages
+
+Relationship:
+
+```
+Conversation
+
+↓
+
+1
+
+↓
+
+Many
+
+↓
+
+ChatMessage
+```
+
+---
+
+# AI Modes
+
+Supported AI modes:
+
+- general
+- backend
+- python
+- interviewer
+
+Each mode uses a different system prompt.
+
+---
+
+# Logging
+
+Application logs include:
+
+- User Authentication
+- Notes Operations
+- Redis Cache Hits
+- Redis Cache Misses
+- PostgreSQL Reads
+- PostgreSQL Writes
+- AI Requests
+- AI Responses
+- Conversation Creation
+- Conversation Deletion
+
+---
+
+# Tech Stack
+
+Backend
+
+- FastAPI
+- Python
+
+Database
+
+- PostgreSQL
+- SQLAlchemy
+
+Cache
+
+- Redis
+
+Authentication
+
+- JWT
+- bcrypt
+
+AI
+
+- Ollama
+- OpenAI Compatible API
+
+Documentation
+
+- Swagger UI
+- OpenAPI
+
+Deployment
+
+- Docker
+
+---
+
+# Project Structure
+
+```
+app
+│
+├── ai
+│   ├── client.py
+│   ├── prompts.py
+│
+├── core
+│   ├── logging_config.py
+│   ├── redis.py
+│   ├── limiter.py
+│   ├── roles.py
+│
+├── routers
+│   ├── auth_routes.py
+│   ├── note_routes.py
+│   ├── admin_routes.py
+│   ├── ai_routes.py
+│
+├── services
+│   ├── auth_service.py
+│   ├── note_service.py
+│   ├── ai_service.py
+│   ├── memory_service.py
+│   ├── conversation_db_service.py
+│
+├── exceptions
+│
+├── models.py
+├── schemas.py
+├── database.py
+├── config.py
+│
+main.py
+```
+
+---
+
+# Running the Project
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Start Docker
+
+```bash
+docker compose up -d
+```
+
+---
+
+## Start Ollama
+
+```bash
+ollama serve
+```
+
+Run your preferred model:
+
+```bash
+ollama run gemma2:2b
+```
+
+---
+
+## Start FastAPI
+
+```bash
+uvicorn main:app --reload
+```
+
+---
+
+# API Documentation
+
+Swagger UI
+
+```
+http://localhost:8000/docs
+```
+
+OpenAPI JSON
+
+```
+http://localhost:8000/openapi.json
+```
+
+---
+
+# Current Progress
+
+Completed Features:
+
+- JWT Authentication
+- Notes CRUD
+- PostgreSQL Integration
+- Redis Caching
+- Background Tasks
+- Logging
+- Role-Based Authorization
+- AI Chat
+- Prompt Engineering
+- Conversation Memory
+- Persistent Conversation Storage
+
+---
+
+# Upcoming Features
+
+- Retrieval Augmented Generation (RAG)
+- PDF Chat
+- Vector Database
+- Embeddings
+- Semantic Search
+- AI Agents
+- Multi-Agent Workflows
+- Model Context Protocol (MCP)

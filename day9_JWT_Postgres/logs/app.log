@@ -86,3 +86,78 @@
 2026-07-15 16:49:01,622 | INFO | Conversation loaded for session chat1
 2026-07-15 16:49:24,964 | INFO | Conversation deleted for session chat1
 2026-07-15 16:49:34,720 | INFO | No conversation found for session chat1
+2026-07-16 14:13:27,275 | INFO | ============================================================
+2026-07-16 14:13:27,277 | INFO | NEW AI REQUEST
+2026-07-16 14:13:27,278 | INFO | Session ID : chat1
+2026-07-16 14:13:27,279 | INFO | Mode       : backend
+2026-07-16 14:13:27,280 | INFO | System Prompt Selected
+2026-07-16 14:13:27,317 | INFO | REDIS MISS : chat1
+2026-07-16 14:13:27,376 | INFO | POSTGRES LOADED 0 messages
+2026-07-16 14:13:27,561 | INFO | CACHE REFRESHED
+2026-07-16 14:13:27,563 | INFO | Conversation Loaded (0 messages)
+2026-07-16 14:13:27,564 | INFO | Sending 2 messages to AI
+2026-07-16 14:18:24,123 | INFO | AI Response Generated
+2026-07-16 14:18:24,217 | INFO | Conversation cached : chat1
+2026-07-16 14:18:24,218 | INFO | Redis Cache Updated
+2026-07-16 14:18:24,981 | INFO | Conversation stored in PostgreSQL
+2026-07-16 14:18:24,988 | INFO | Conversation Saved to PostgreSQL
+2026-07-16 14:18:24,988 | INFO | ============================================================
+2026-07-16 14:19:12,042 | INFO | ============================================================
+2026-07-16 14:19:12,044 | INFO | NEW AI REQUEST
+2026-07-16 14:19:12,044 | INFO | Session ID : chat1
+2026-07-16 14:19:12,045 | INFO | Mode       : backend
+2026-07-16 14:19:12,045 | INFO | System Prompt Selected
+2026-07-16 14:19:12,055 | INFO | REDIS HIT : chat1
+2026-07-16 14:19:12,058 | INFO | Conversation Loaded (2 messages)
+2026-07-16 14:19:12,058 | INFO | Sending 4 messages to AI
+2026-07-16 14:20:44,605 | INFO | AI Response Generated
+2026-07-16 14:20:44,627 | INFO | Conversation cached : chat1
+2026-07-16 14:20:44,628 | INFO | Redis Cache Updated
+2026-07-16 14:20:45,052 | INFO | Conversation stored in PostgreSQL
+2026-07-16 14:20:45,060 | INFO | Conversation Saved to PostgreSQL
+2026-07-16 14:20:45,065 | INFO | ============================================================
+2026-07-16 14:27:23,955 | INFO | ============================================================
+2026-07-16 14:27:23,963 | INFO | NEW AI REQUEST
+2026-07-16 14:27:23,963 | INFO | Session ID : chat1
+2026-07-16 14:27:23,964 | INFO | Mode       : backend
+2026-07-16 14:27:23,964 | INFO | System Prompt Selected
+2026-07-16 14:27:23,996 | INFO | REDIS HIT : chat1
+2026-07-16 14:27:23,998 | INFO | Conversation Loaded (4 messages)
+2026-07-16 14:27:23,998 | INFO | Sending 6 messages to AI
+2026-07-16 14:32:25,057 | INFO | AI Response Generated
+2026-07-16 14:32:25,131 | INFO | Conversation cached : chat1
+2026-07-16 14:32:25,132 | INFO | Redis Cache Updated
+2026-07-16 14:32:26,226 | INFO | Conversation stored in PostgreSQL
+2026-07-16 14:32:26,230 | INFO | Conversation Saved to PostgreSQL
+2026-07-16 14:32:26,231 | INFO | ============================================================
+2026-07-16 14:33:28,290 | INFO | Conversation deleted : chat1
+2026-07-16 14:38:38,286 | INFO | ============================================================
+2026-07-16 14:38:38,288 | INFO | NEW AI REQUEST
+2026-07-16 14:38:38,288 | INFO | Session ID : chat1
+2026-07-16 14:38:38,289 | INFO | Mode       : backend
+2026-07-16 14:38:38,289 | INFO | System Prompt Selected
+2026-07-16 14:38:38,323 | INFO | REDIS MISS : chat1
+2026-07-16 14:38:38,324 | INFO | Loading conversation: chat1
+2026-07-16 14:38:38,326 | INFO | Searching conversation: chat1
+2026-07-16 14:38:38,385 | INFO | Conversation does not exist
+2026-07-16 14:38:38,386 | INFO | No conversation found
+2026-07-16 14:38:38,387 | INFO | POSTGRES LOADED 0 messages
+2026-07-16 14:38:38,389 | INFO | CACHE REFRESHED
+2026-07-16 14:38:38,392 | INFO | Conversation Loaded (0 messages)
+2026-07-16 14:38:38,393 | INFO | Sending 2 messages to AI
+2026-07-16 14:42:42,364 | INFO | AI Response Generated
+2026-07-16 14:42:42,450 | INFO | Conversation cached : chat1
+2026-07-16 14:42:42,452 | INFO | Redis Cache Updated
+2026-07-16 14:42:42,480 | INFO | Searching conversation: chat1
+2026-07-16 14:42:42,713 | INFO | Conversation does not exist
+2026-07-16 14:42:42,713 | INFO | Creating conversation: chat1
+2026-07-16 14:42:42,884 | INFO | Conversation created successfully
+2026-07-16 14:42:42,885 | INFO | Saving user message
+2026-07-16 14:42:42,962 | INFO | Message saved successfully
+2026-07-16 14:42:42,963 | INFO | Searching conversation: chat1
+2026-07-16 14:42:42,969 | INFO | Conversation found in PostgreSQL
+2026-07-16 14:42:42,970 | INFO | Saving assistant message
+2026-07-16 14:42:43,006 | INFO | Message saved successfully
+2026-07-16 14:42:43,007 | INFO | Conversation stored in PostgreSQL
+2026-07-16 14:42:43,012 | INFO | Conversation Saved to PostgreSQL
+2026-07-16 14:42:43,013 | INFO | ============================================================
