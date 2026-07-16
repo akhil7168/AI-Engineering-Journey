@@ -1,67 +1,100 @@
 import json
 
+from database import SessionLocal
+
 from app.core.redis import redis_client
 from app.core.logging_config import logger
 
+from app.services.conversation_db_service import (
+    load_conversation,
+    save_message,
+    delete_conversation
+)
+
+
+CACHE_EXPIRY = 3600
+
+
+def get_cache_key(session_id: str):
+
+    return f"chat:{session_id}"
+
 
 def get_conversation(session_id: str):
-    """
-    Retrieve the complete conversation from Redis.
-    Returns an empty list if no conversation exists.
-    """
 
-    cache_key = f"chat:{session_id}"
+    cache_key = get_cache_key(session_id)
 
-    conversation = redis_client.get(cache_key)
+    cached_data = redis_client.get(cache_key)
 
-    if conversation:
+    if cached_data:
 
         logger.info(
-            f"Conversation loaded for session {session_id}"
+            f"REDIS HIT : {session_id}"
         )
 
-        return json.loads(conversation)
+        return json.loads(cached_data)
 
     logger.info(
-        f"No conversation found for session {session_id}"
+        f"REDIS MISS : {session_id}"
     )
 
-    return []
+    db = SessionLocal()
+
+    try:
+
+        conversation = load_conversation(
+            db,
+            session_id
+        )
+
+        logger.info(
+            f"POSTGRES LOADED {len(conversation)} messages"
+        )
+
+        redis_client.setex(
+            cache_key,
+            CACHE_EXPIRY,
+            json.dumps(conversation)
+        )
+
+        logger.info(
+            "CACHE REFRESHED"
+        )
+
+        return conversation
+
+    finally:
+
+        db.close()
 
 
 def save_conversation(
     session_id: str,
-    messages: list
+    conversation: list
 ):
-    """
-    Save the entire conversation back to Redis.
-    """
 
-    cache_key = f"chat:{session_id}"
+    cache_key = get_cache_key(session_id)
 
     redis_client.setex(
         cache_key,
-        3600,
-        json.dumps(messages)
+        CACHE_EXPIRY,
+        json.dumps(conversation)
     )
 
     logger.info(
-        f"Conversation saved for session {session_id}"
+        f"Conversation cached : {session_id}"
     )
 
 
 def add_user_message(
-    conversation: list,
-    message: str
+    conversation,
+    prompt
 ):
-    """
-    Add the user's message to the conversation.
-    """
 
     conversation.append(
         {
             "role": "user",
-            "content": message
+            "content": prompt
         }
     )
 
@@ -69,34 +102,74 @@ def add_user_message(
 
 
 def add_ai_message(
-    conversation: list,
-    message: str
+    conversation,
+    response
 ):
-    """
-    Add the AI's response to the conversation.
-    """
 
     conversation.append(
         {
             "role": "assistant",
-            "content": message
+            "content": response
         }
     )
 
     return conversation
 
 
+def persist_messages(
+    session_id: str,
+    user_prompt: str,
+    ai_response: str
+):
+
+    db = SessionLocal()
+
+    try:
+
+        save_message(
+            db,
+            session_id,
+            "user",
+            user_prompt
+        )
+
+        save_message(
+            db,
+            session_id,
+            "assistant",
+            ai_response
+        )
+
+        logger.info(
+            "Conversation stored in PostgreSQL"
+        )
+
+    finally:
+
+        db.close()
+
+
 def clear_conversation(
     session_id: str
 ):
-    """
-    Delete the conversation from Redis.
-    """
 
-    cache_key = f"chat:{session_id}"
+    cache_key = get_cache_key(session_id)
 
     redis_client.delete(cache_key)
 
-    logger.info(
-        f"Conversation deleted for session {session_id}"
-    )
+    db = SessionLocal()
+
+    try:
+
+        delete_conversation(
+            db,
+            session_id
+        )
+
+        logger.info(
+            f"Conversation deleted : {session_id}"
+        )
+
+    finally:
+
+        db.close()

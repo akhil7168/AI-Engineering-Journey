@@ -11,7 +11,8 @@ from app.services.memory_service import (
     get_conversation,
     save_conversation,
     add_user_message,
-    add_ai_message
+    add_ai_message,
+    persist_messages
 )
 
 from app.core.logging_config import logger
@@ -23,12 +24,15 @@ def generate_ai_response(
     mode: str = "general"
 ):
     """
-    Handles the complete AI workflow:
-    1. Select prompt template
-    2. Load conversation history
-    3. Append latest user message
-    4. Send to LLM
-    5. Save AI response
+    Complete AI Workflow
+
+    1. Load conversation (Redis → PostgreSQL if needed)
+    2. Select system prompt
+    3. Add latest user message
+    4. Call AI
+    5. Add AI response
+    6. Update Redis cache
+    7. Persist messages in PostgreSQL
     """
 
     logger.info("=" * 60)
@@ -36,7 +40,10 @@ def generate_ai_response(
     logger.info(f"Session ID : {session_id}")
     logger.info(f"Mode       : {mode}")
 
-    # Select Prompt
+    # -------------------------
+    # Select System Prompt
+    # -------------------------
+
     if mode == "backend":
         system_prompt = BACKEND_PROMPT
 
@@ -51,20 +58,29 @@ def generate_ai_response(
 
     logger.info("System Prompt Selected")
 
+    # -------------------------
     # Load Conversation
+    # -------------------------
+
     conversation = get_conversation(session_id)
 
     logger.info(
         f"Conversation Loaded ({len(conversation)} messages)"
     )
 
+    # -------------------------
     # Add User Message
+    # -------------------------
+
     conversation = add_user_message(
         conversation,
         prompt
     )
 
-    # Build Complete Message List
+    # -------------------------
+    # Prepare Messages
+    # -------------------------
+
     messages = [
         {
             "role": "system",
@@ -80,29 +96,60 @@ def generate_ai_response(
 
     try:
 
-        # Generate AI Response
+        # -------------------------
+        # AI Response
+        # -------------------------
+
         response = chat_with_ai(messages)
 
-        logger.info("AI Response Generated")
+        logger.info(
+            "AI Response Generated"
+        )
 
-        # Save AI Response
+        # -------------------------
+        # Add AI Message
+        # -------------------------
+
         conversation = add_ai_message(
             conversation,
             response
         )
+
+        # -------------------------
+        # Update Redis Cache
+        # -------------------------
 
         save_conversation(
             session_id,
             conversation
         )
 
-        logger.info("Conversation Saved")
+        logger.info(
+            "Redis Cache Updated"
+        )
+
+        # -------------------------
+        # Save to PostgreSQL
+        # -------------------------
+
+        persist_messages(
+            session_id,
+            prompt,
+            response
+        )
+
+        logger.info(
+            "Conversation Saved to PostgreSQL"
+        )
+
         logger.info("=" * 60)
 
         return response
 
     except Exception as e:
 
-        logger.error(f"AI Error : {str(e)}")
+        logger.error(
+            f"AI Error : {str(e)}"
+        )
 
         return "Unable to generate AI response."

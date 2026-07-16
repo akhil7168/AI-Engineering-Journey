@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from database import Base, engine, SessionLocal
-from models import User, Note
+from models import *
 
 from app.routers.auth_routes import router as auth_router
 from app.routers.note_routes import router as note_router
