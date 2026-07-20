@@ -1,11 +1,16 @@
 from fastapi import APIRouter
 
+from fastapi.responses import StreamingResponse
+
+from app.services.ai_service import (
+    generate_ai_response,
+    generate_streaming_response
+)
+
 from schemas import (
     ConversationRequest,
     ConversationResponse
 )
-
-from app.services.ai_service import generate_ai_response
 
 from app.services.memory_service import (
     get_conversation,
@@ -39,6 +44,29 @@ async def chat(
     return ConversationResponse(
         session_id=request.session_id,
         response=response
+    )
+
+@router.post(
+    "/chat/stream",
+    summary="Stream AI Response"
+)
+def chat_stream(
+    request: ConversationRequest
+):
+
+    def event_generator():
+
+        for token in generate_streaming_response(
+            session_id=request.session_id,
+            prompt=request.prompt,
+            mode=request.mode
+        ):
+
+            yield f"data: {token}\n\n"
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream"
     )
 
 

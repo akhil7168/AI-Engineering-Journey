@@ -110,14 +110,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=[
         "localhost",
         "127.0.0.1",
+        "testserver",
         "*.onrender.com"
     ]
 )
+print("TrustedHostMiddleware configured")
+print(app.user_middleware)
 
 @app.middleware("http")
 async def add_security_headers(request, call_next):

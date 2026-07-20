@@ -161,3 +161,146 @@
 2026-07-16 14:42:43,007 | INFO | Conversation stored in PostgreSQL
 2026-07-16 14:42:43,012 | INFO | Conversation Saved to PostgreSQL
 2026-07-16 14:42:43,013 | INFO | ============================================================
+2026-07-20 22:02:38,198 | INFO | ============================================================
+2026-07-20 22:02:38,199 | INFO | STREAMING AI REQUEST
+2026-07-20 22:02:38,199 | INFO | Session ID : stream_test
+2026-07-20 22:02:38,199 | INFO | Mode       : backend
+2026-07-20 22:02:38,199 | INFO | System Prompt Selected
+2026-07-20 22:02:38,230 | INFO | REDIS MISS : stream_test
+2026-07-20 22:02:38,230 | INFO | Loading conversation: stream_test
+2026-07-20 22:02:38,231 | INFO | Searching conversation: stream_test
+2026-07-20 22:02:38,291 | INFO | Conversation does not exist
+2026-07-20 22:02:38,291 | INFO | No conversation found
+2026-07-20 22:02:38,291 | INFO | POSTGRES LOADED 0 messages
+2026-07-20 22:02:38,293 | INFO | CACHE REFRESHED
+2026-07-20 22:02:38,296 | INFO | Conversation Loaded (0 messages)
+2026-07-20 22:02:38,296 | INFO | Sending 2 messages to Ollama
+2026-07-20 22:02:38,296 | INFO | Streaming Started
+2026-07-20 22:02:38,296 | INFO | Connecting to Ollama...
+2026-07-20 22:02:38,300 | INFO | Connected to Ollama
+2026-07-20 22:02:42,875 | ERROR | Ollama Streaming Error : llama-server process has terminated: exit status 1: ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 1138655232
+alloc_tensor_range: failed to allocate CPU_REPACK buffer of size 1138655232
+error loading model: unable to allocate CPU_REPACK buffer (status code: 500)
+2026-07-20 22:02:42,876 | ERROR | Streaming Error : llama-server process has terminated: exit status 1: ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 1138655232
+alloc_tensor_range: failed to allocate CPU_REPACK buffer of size 1138655232
+error loading model: unable to allocate CPU_REPACK buffer (status code: 500)
+2026-07-20 22:03:12,403 | INFO | ============================================================
+2026-07-20 22:03:12,404 | INFO | STREAMING AI REQUEST
+2026-07-20 22:03:12,404 | INFO | Session ID : stream_test
+2026-07-20 22:03:12,405 | INFO | Mode       : backend
+2026-07-20 22:03:12,405 | INFO | System Prompt Selected
+2026-07-20 22:03:12,410 | INFO | REDIS HIT : stream_test
+2026-07-20 22:03:12,410 | INFO | Conversation Loaded (0 messages)
+2026-07-20 22:03:12,410 | INFO | Sending 2 messages to Ollama
+2026-07-20 22:03:12,410 | INFO | Streaming Started
+2026-07-20 22:03:12,411 | INFO | Connecting to Ollama...
+2026-07-20 22:03:12,412 | INFO | Connected to Ollama
+2026-07-20 22:05:47,133 | INFO | Ollama Stream Finished
+2026-07-20 22:05:47,176 | INFO | Streaming Completed (836 chunks)
+2026-07-20 22:05:47,177 | INFO | Assistant Message Added
+2026-07-20 22:05:47,240 | INFO | Conversation cached : stream_test
+2026-07-20 22:05:47,241 | INFO | Conversation Cached in Redis
+2026-07-20 22:05:47,273 | INFO | Searching conversation: stream_test
+2026-07-20 22:05:47,631 | INFO | Conversation does not exist
+2026-07-20 22:05:47,633 | INFO | Creating conversation: stream_test
+2026-07-20 22:05:47,737 | INFO | Conversation created successfully
+2026-07-20 22:05:47,738 | INFO | Saving user message
+2026-07-20 22:05:47,771 | INFO | Message saved successfully
+2026-07-20 22:05:47,773 | INFO | Searching conversation: stream_test
+2026-07-20 22:05:47,776 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:05:47,777 | INFO | Saving assistant message
+2026-07-20 22:05:47,795 | INFO | Message saved successfully
+2026-07-20 22:05:47,796 | INFO | Conversation stored in PostgreSQL
+2026-07-20 22:05:47,799 | INFO | Conversation Saved to PostgreSQL
+2026-07-20 22:05:47,799 | INFO | ============================================================
+2026-07-20 22:05:48,039 | INFO | ============================================================
+2026-07-20 22:05:48,040 | INFO | NEW AI REQUEST
+2026-07-20 22:05:48,041 | INFO | Session ID : stream_test
+2026-07-20 22:05:48,041 | INFO | Mode       : backend
+2026-07-20 22:05:48,041 | INFO | System Prompt Selected
+2026-07-20 22:05:48,048 | INFO | REDIS HIT : stream_test
+2026-07-20 22:05:48,049 | INFO | Conversation Loaded (2 messages)
+2026-07-20 22:05:48,049 | INFO | Sending 4 messages to AI
+2026-07-20 22:08:14,518 | INFO | AI Response Generated
+2026-07-20 22:08:14,523 | INFO | Conversation cached : stream_test
+2026-07-20 22:08:14,523 | INFO | Redis Cache Updated
+2026-07-20 22:08:14,524 | INFO | Searching conversation: stream_test
+2026-07-20 22:08:14,659 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:08:14,659 | INFO | Saving user message
+2026-07-20 22:08:14,699 | INFO | Message saved successfully
+2026-07-20 22:08:14,701 | INFO | Searching conversation: stream_test
+2026-07-20 22:08:14,705 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:08:14,706 | INFO | Saving assistant message
+2026-07-20 22:08:14,726 | INFO | Message saved successfully
+2026-07-20 22:08:14,726 | INFO | Conversation stored in PostgreSQL
+2026-07-20 22:08:14,728 | INFO | Conversation Saved to PostgreSQL
+2026-07-20 22:08:14,728 | INFO | ============================================================
+2026-07-20 22:08:14,801 | INFO | Loading conversation: stream_test
+2026-07-20 22:08:14,802 | INFO | Searching conversation: stream_test
+2026-07-20 22:08:14,808 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:08:14,850 | INFO | 4 messages loaded
+2026-07-20 22:08:14,891 | INFO | 2 conversations found
+2026-07-20 22:08:14,922 | INFO | Deleting conversation: stream_test
+2026-07-20 22:08:14,923 | INFO | Searching conversation: stream_test
+2026-07-20 22:08:14,929 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:08:14,987 | INFO | Conversation deleted successfully
+2026-07-20 22:08:14,988 | INFO | Conversation deleted : stream_test
+2026-07-20 22:08:15,010 | INFO | Loading conversation: stream_test
+2026-07-20 22:08:15,012 | INFO | Searching conversation: stream_test
+2026-07-20 22:08:15,018 | INFO | Conversation does not exist
+2026-07-20 22:08:15,019 | INFO | No conversation found
+2026-07-20 22:14:17,102 | INFO | ============================================================
+2026-07-20 22:14:17,104 | INFO | NEW AI REQUEST
+2026-07-20 22:14:17,106 | INFO | Session ID : chat1
+2026-07-20 22:14:17,109 | INFO | Mode       : backend
+2026-07-20 22:14:17,110 | INFO | System Prompt Selected
+2026-07-20 22:14:17,153 | INFO | REDIS MISS : chat1
+2026-07-20 22:14:17,154 | INFO | Loading conversation: chat1
+2026-07-20 22:14:17,154 | INFO | Searching conversation: chat1
+2026-07-20 22:14:17,220 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:14:17,246 | INFO | 2 messages loaded
+2026-07-20 22:14:17,246 | INFO | POSTGRES LOADED 2 messages
+2026-07-20 22:14:17,249 | INFO | CACHE REFRESHED
+2026-07-20 22:14:17,254 | INFO | Conversation Loaded (2 messages)
+2026-07-20 22:14:17,256 | INFO | Sending 4 messages to AI
+2026-07-20 22:18:14,908 | INFO | AI Response Generated
+2026-07-20 22:18:14,943 | INFO | Conversation cached : chat1
+2026-07-20 22:18:14,943 | INFO | Redis Cache Updated
+2026-07-20 22:18:14,957 | INFO | Searching conversation: chat1
+2026-07-20 22:18:15,155 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:18:15,156 | INFO | Saving user message
+2026-07-20 22:18:15,338 | INFO | Message saved successfully
+2026-07-20 22:18:15,338 | INFO | Searching conversation: chat1
+2026-07-20 22:18:15,342 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:18:15,344 | INFO | Saving assistant message
+2026-07-20 22:18:15,373 | INFO | Message saved successfully
+2026-07-20 22:18:15,374 | INFO | Conversation stored in PostgreSQL
+2026-07-20 22:18:15,378 | INFO | Conversation Saved to PostgreSQL
+2026-07-20 22:18:15,379 | INFO | ============================================================
+2026-07-20 22:18:39,969 | INFO | ============================================================
+2026-07-20 22:18:39,973 | INFO | STREAMING AI REQUEST
+2026-07-20 22:18:39,977 | INFO | Session ID : chat1
+2026-07-20 22:18:39,979 | INFO | Mode       : backend
+2026-07-20 22:18:39,981 | INFO | System Prompt Selected
+2026-07-20 22:18:40,009 | INFO | REDIS HIT : chat1
+2026-07-20 22:18:40,024 | INFO | Conversation Loaded (4 messages)
+2026-07-20 22:18:40,028 | INFO | Sending 6 messages to Ollama
+2026-07-20 22:18:40,028 | INFO | Streaming Started
+2026-07-20 22:18:40,038 | INFO | Connecting to Ollama...
+2026-07-20 22:18:40,097 | INFO | Connected to Ollama
+2026-07-20 22:22:52,643 | INFO | Ollama Stream Finished
+2026-07-20 22:22:52,656 | INFO | Streaming Completed (717 chunks)
+2026-07-20 22:22:52,658 | INFO | Assistant Message Added
+2026-07-20 22:22:52,712 | INFO | Conversation cached : chat1
+2026-07-20 22:22:52,713 | INFO | Conversation Cached in Redis
+2026-07-20 22:22:52,744 | INFO | Searching conversation: chat1
+2026-07-20 22:22:53,060 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:22:53,061 | INFO | Saving user message
+2026-07-20 22:22:53,183 | INFO | Message saved successfully
+2026-07-20 22:22:53,183 | INFO | Searching conversation: chat1
+2026-07-20 22:22:53,195 | INFO | Conversation found in PostgreSQL
+2026-07-20 22:22:53,196 | INFO | Saving assistant message
+2026-07-20 22:22:53,242 | INFO | Message saved successfully
+2026-07-20 22:22:53,247 | INFO | Conversation stored in PostgreSQL
+2026-07-20 22:22:53,256 | INFO | Conversation Saved to PostgreSQL
+2026-07-20 22:22:53,256 | INFO | ============================================================

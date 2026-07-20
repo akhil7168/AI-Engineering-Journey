@@ -1,23 +1,69 @@
-from openai import OpenAI
+import ollama
 
-client = OpenAI(
-    base_url="http://localhost:11434/v1",
-    api_key="ollama"
-)
+from app.core.logging_config import logger
 
-MODEL_NAME = "gemma3:1b"
+MODEL_NAME = "gemma2:2b"
 
 
 def chat_with_ai(messages: list):
     """
-    Sends the complete conversation to Ollama
-    and returns the AI response.
+    Normal AI response.
+    Returns the complete response as a string.
     """
 
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=messages,
-        temperature=0.7
-    )
+    try:
 
-    return response.choices[0].message.content
+        response = ollama.chat(
+            model=MODEL_NAME,
+            messages=messages,
+            stream=False
+        )
+
+        return response["message"]["content"]
+
+    except Exception as e:
+
+        logger.error(f"Ollama Error: {str(e)}")
+
+        raise e
+
+
+def stream_chat_with_ai(messages: list):
+    """
+    Stream AI response from Ollama.
+    """
+
+    logger.info("Connecting to Ollama...")
+
+    try:
+
+        stream = ollama.chat(
+            model=MODEL_NAME,
+            messages=messages,
+            stream=True
+        )
+
+        logger.info("Connected to Ollama")
+
+        for chunk in stream:
+
+            if (
+                "message" in chunk
+                and "content" in chunk["message"]
+            ):
+
+                token = chunk["message"]["content"]
+
+                if token:
+
+                    yield token
+
+        logger.info("Ollama Stream Finished")
+
+    except Exception as e:
+
+        logger.error(
+            f"Ollama Streaming Error : {str(e)}"
+        )
+
+        raise

@@ -1301,3 +1301,252 @@ Completed Features:
 - AI Agents
 - Multi-Agent Workflows
 - Model Context Protocol (MCP)
+
+# Day 35 – Streaming AI Responses
+
+## Objective
+
+The objective of this milestone was to improve the user experience by implementing real-time AI response streaming using Server-Sent Events (SSE). Unlike the traditional endpoint that waits for the complete response before returning it, the streaming endpoint sends generated tokens immediately as they are produced by the language model.
+
+---
+
+# Features Implemented
+
+- Real-time AI response streaming
+- Server-Sent Events (SSE)
+- Conversation persistence after streaming completes
+- Streaming endpoint integrated with Ollama (Gemma)
+- Performance comparison between normal and streaming endpoints
+- Comprehensive API testing
+
+---
+
+# API Endpoints
+
+## Normal Chat
+
+**POST**
+
+```
+/ai/chat
+```
+
+Returns the complete AI response after generation finishes.
+
+Example Request
+
+```json
+{
+    "session_id": "demo",
+    "prompt": "Explain JWT Authentication",
+    "mode": "backend"
+}
+```
+
+---
+
+## Streaming Chat
+
+**POST**
+
+```
+/ai/chat/stream
+```
+
+Returns the response incrementally using Server-Sent Events.
+
+Example Request
+
+```json
+{
+    "session_id": "demo",
+    "prompt": "Explain JWT Authentication",
+    "mode": "backend"
+}
+```
+
+Example Stream
+
+```
+data: JWT
+
+data: stands
+
+data: for
+
+data: JSON
+
+data: Web
+
+data: Token
+
+...
+```
+
+---
+
+## Conversation History
+
+### Get Conversation
+
+```
+GET /ai/conversation/{session_id}
+```
+
+Returns all messages stored for a conversation.
+
+---
+
+### List Conversations
+
+```
+GET /ai/conversations
+```
+
+Returns all available conversation IDs.
+
+---
+
+### Delete Conversation
+
+```
+DELETE /ai/conversation/{session_id}
+```
+
+Deletes a stored conversation.
+
+---
+
+# Project Structure
+
+```
+app/
+│
+├── ai/
+│   ├── client.py
+│   ├── prompts.py
+│   └── retriever.py
+│
+├── routes/
+│   └── ai.py
+│
+├── services/
+│   └── ai_service.py
+│
+├── models/
+├── database.py
+└── main.py
+
+tests/
+└── test_streaming.py
+```
+
+---
+
+# Streaming Workflow
+
+```
+User
+   │
+   ▼
+POST /ai/chat/stream
+   │
+   ▼
+FastAPI Route
+   │
+   ▼
+AI Service
+   │
+   ▼
+Ollama (Gemma)
+   │
+   ▼
+Generate Tokens
+   │
+   ▼
+StreamingResponse
+(Server-Sent Events)
+   │
+   ▼
+Client receives tokens instantly
+   │
+   ▼
+Conversation saved to PostgreSQL
+```
+
+---
+
+# Performance Comparison
+
+| Endpoint | Time to First Token | Total Response Time |
+|----------|--------------------:|--------------------:|
+| `/ai/chat` | N/A | 4.3 sec |
+| `/ai/chat/stream` | 0.8 sec | 4.2 sec |
+
+> Replace these values with the measurements from your system.
+
+---
+
+# Advantages of Streaming
+
+- Lower perceived latency
+- Better user experience
+- Suitable for long AI-generated responses
+- Progressive rendering of content
+- Similar total execution time compared to normal responses
+
+---
+
+# Technologies Used
+
+- Python 3.11
+- FastAPI
+- Ollama
+- Gemma
+- PostgreSQL
+- SQLAlchemy
+- Server-Sent Events (SSE)
+- Uvicorn
+- Pydantic
+
+---
+
+# Testing
+
+Run all streaming tests:
+
+```bash
+pytest tests/test_streaming.py -v
+```
+
+Run performance benchmark:
+
+```bash
+python performance_test.py
+```
+
+---
+
+# Learning Outcomes
+
+After completing this module, the project now supports:
+
+- AI response streaming using SSE
+- Incremental token delivery
+- Persistent conversation storage
+- REST APIs for conversation management
+- Performance benchmarking
+- Production-ready AI response handling
+
+---
+
+# Future Improvements
+
+- WebSocket-based bidirectional streaming
+- Token usage tracking
+- Response cancellation
+- Multi-model support
+- Streaming markdown rendering
+- Semantic retrieval using vector databases
+- Retrieval-Augmented Generation (RAG)
+- Real-time frontend integration with React
