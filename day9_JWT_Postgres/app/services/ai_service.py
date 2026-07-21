@@ -10,6 +10,8 @@ from app.ai.prompts import (
     INTERVIEWER_PROMPT
 )
 
+from app.ai.retriever import retrieve_context
+
 from app.services.memory_service import (
     get_conversation,
     save_conversation,
@@ -21,6 +23,41 @@ from app.services.memory_service import (
 from app.core.logging_config import logger
 
 
+def build_rag_prompt(question: str) -> str:
+    """
+    Build a Retrieval-Augmented prompt using semantic search.
+    """
+
+    context = retrieve_context(question)
+
+    if not context.strip():
+        context = "No relevant context found."
+
+    return f"""
+Use the following context to answer the user's question.
+
+If the answer is not available in the context,
+answer using your own knowledge and clearly mention
+that it is not present in the knowledge base.
+
+=====================
+CONTEXT
+=====================
+
+{context}
+
+=====================
+QUESTION
+=====================
+
+{question}
+
+=====================
+ANSWER
+=====================
+"""
+
+
 def generate_ai_response(
     session_id: str,
     prompt: str,
@@ -29,13 +66,11 @@ def generate_ai_response(
     """
     Complete AI Workflow
 
-    1. Load conversation (Redis → PostgreSQL if needed)
-    2. Select system prompt
-    3. Add latest user message
+    1. Load conversation
+    2. Retrieve semantic context
+    3. Build RAG prompt
     4. Call AI
-    5. Add AI response
-    6. Update Redis cache
-    7. Persist messages in PostgreSQL
+    5. Save conversation
     """
 
     logger.info("=" * 60)
@@ -72,12 +107,18 @@ def generate_ai_response(
     )
 
     # -------------------------
+    # Build RAG Prompt
+    # -------------------------
+
+    rag_prompt = build_rag_prompt(prompt)
+
+    # -------------------------
     # Add User Message
     # -------------------------
 
     conversation = add_user_message(
         conversation,
-        prompt
+        rag_prompt
     )
 
     # -------------------------
@@ -99,41 +140,21 @@ def generate_ai_response(
 
     try:
 
-        # -------------------------
-        # AI Response
-        # -------------------------
-
         response = chat_with_ai(messages)
 
-        logger.info(
-            "AI Response Generated"
-        )
-
-        # -------------------------
-        # Add AI Message
-        # -------------------------
+        logger.info("AI Response Generated")
 
         conversation = add_ai_message(
             conversation,
             response
         )
 
-        # -------------------------
-        # Update Redis Cache
-        # -------------------------
-
         save_conversation(
             session_id,
             conversation
         )
 
-        logger.info(
-            "Redis Cache Updated"
-        )
-
-        # -------------------------
-        # Save to PostgreSQL
-        # -------------------------
+        logger.info("Redis Cache Updated")
 
         persist_messages(
             session_id,
@@ -141,9 +162,7 @@ def generate_ai_response(
             response
         )
 
-        logger.info(
-            "Conversation Saved to PostgreSQL"
-        )
+        logger.info("Conversation Saved to PostgreSQL")
 
         logger.info("=" * 60)
 
@@ -156,15 +175,15 @@ def generate_ai_response(
         )
 
         return "Unable to generate AI response."
-    
+
+
 def generate_streaming_response(
     session_id: str,
     prompt: str,
     mode: str = "general"
 ):
     """
-    Streams AI response while maintaining
-    conversation history.
+    Streams AI response while maintaining conversation history.
     """
 
     logger.info("=" * 60)
@@ -201,12 +220,18 @@ def generate_streaming_response(
     )
 
     # -------------------------
+    # Build RAG Prompt
+    # -------------------------
+
+    rag_prompt = build_rag_prompt(prompt)
+
+    # -------------------------
     # Add User Message
     # -------------------------
 
     conversation = add_user_message(
         conversation,
-        prompt
+        rag_prompt
     )
 
     # -------------------------
@@ -244,31 +269,15 @@ def generate_streaming_response(
             f"Streaming Completed ({token_count} chunks)"
         )
 
-        # -------------------------
-        # Save Assistant Response
-        # -------------------------
-
         conversation = add_ai_message(
             conversation,
             complete_response
         )
 
-        logger.info("Assistant Message Added")
-
-        # -------------------------
-        # Save Redis
-        # -------------------------
-
         save_conversation(
             session_id,
             conversation
         )
-
-        logger.info("Conversation Cached in Redis")
-
-        # -------------------------
-        # Save PostgreSQL
-        # -------------------------
 
         persist_messages(
             session_id,
@@ -276,7 +285,7 @@ def generate_streaming_response(
             complete_response
         )
 
-        logger.info("Conversation Saved to PostgreSQL")
+        logger.info("Conversation Saved")
 
         logger.info("=" * 60)
 
