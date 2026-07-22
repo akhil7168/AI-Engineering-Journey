@@ -7,23 +7,20 @@ print("Loading knowledge base...")
 
 load_knowledge_base()
 
-print()
-
-queries = [
-    "Explain JWT",
-    "How does authentication work?",
-    "Python backend framework",
-    "Where are conversations stored?",
-    "What is Redis?"
+questions = [
+    "Explain JWT Authentication",
+    "What is Redis?",
+    "Explain FastAPI",
+    "What does PostgreSQL store?",
+    "What is AI Backend Engineering?"
 ]
 
-for query in queries:
+for question in questions:
 
-    print("=" * 60)
-    print("Question:", query)
-    print()
+    print("\n" + "=" * 70)
+    print(question)
+    print("-" * 70)
 
-    context = retrieve_context(query)
+    context = retrieve_context(question)
 
     print(context)
-    print()

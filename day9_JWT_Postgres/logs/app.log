@@ -518,3 +518,221 @@ error loading model: unable to allocate CPU_REPACK buffer (status code: 500)
 2026-07-21 21:28:04,972 | INFO | Conversation stored in PostgreSQL
 2026-07-21 21:28:04,976 | INFO | Conversation Saved to PostgreSQL
 2026-07-21 21:28:04,976 | INFO | ============================================================
+2026-07-22 15:17:48,360 | INFO | ============================================================
+2026-07-22 15:17:48,362 | INFO | NEW AI REQUEST
+2026-07-22 15:17:48,362 | INFO | Session ID : test-session
+2026-07-22 15:17:48,363 | INFO | Mode       : general
+2026-07-22 15:17:48,363 | INFO | System Prompt Selected
+2026-07-22 15:17:48,390 | INFO | REDIS MISS : test-session
+2026-07-22 15:17:48,391 | INFO | Loading conversation: test-session
+2026-07-22 15:17:48,391 | INFO | Searching conversation: test-session
+2026-07-22 15:17:48,849 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:17:48,870 | INFO | 8 messages loaded
+2026-07-22 15:17:48,870 | INFO | POSTGRES LOADED 8 messages
+2026-07-22 15:17:48,872 | INFO | CACHE REFRESHED
+2026-07-22 15:17:48,874 | INFO | Conversation Loaded (8 messages)
+2026-07-22 15:17:49,173 | INFO | Sending 10 messages to AI
+2026-07-22 15:18:55,011 | INFO | AI Response Generated
+2026-07-22 15:18:55,110 | INFO | Conversation cached : test-session
+2026-07-22 15:18:55,111 | INFO | Redis Cache Updated
+2026-07-22 15:18:55,136 | INFO | Searching conversation: test-session
+2026-07-22 15:18:55,394 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:18:55,394 | INFO | Saving user message
+2026-07-22 15:18:55,638 | INFO | Message saved successfully
+2026-07-22 15:18:55,640 | INFO | Searching conversation: test-session
+2026-07-22 15:18:55,644 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:18:55,645 | INFO | Saving assistant message
+2026-07-22 15:18:55,662 | INFO | Message saved successfully
+2026-07-22 15:18:55,663 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:18:55,667 | INFO | Conversation Saved to PostgreSQL
+2026-07-22 15:18:55,667 | INFO | ============================================================
+2026-07-22 15:18:55,672 | INFO | ============================================================
+2026-07-22 15:18:55,672 | INFO | NEW AI REQUEST
+2026-07-22 15:18:55,672 | INFO | Session ID : test-session
+2026-07-22 15:18:55,672 | INFO | Mode       : general
+2026-07-22 15:18:55,673 | INFO | System Prompt Selected
+2026-07-22 15:18:55,678 | INFO | REDIS HIT : test-session
+2026-07-22 15:18:55,680 | INFO | Conversation Loaded (10 messages)
+2026-07-22 15:18:56,446 | INFO | Sending 12 messages to AI
+2026-07-22 15:19:31,011 | INFO | AI Response Generated
+2026-07-22 15:19:31,016 | INFO | Conversation cached : test-session
+2026-07-22 15:19:31,017 | INFO | Redis Cache Updated
+2026-07-22 15:19:31,017 | INFO | Searching conversation: test-session
+2026-07-22 15:19:31,035 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:19:31,041 | INFO | Saving user message
+2026-07-22 15:19:31,082 | INFO | Message saved successfully
+2026-07-22 15:19:31,082 | INFO | Searching conversation: test-session
+2026-07-22 15:19:31,087 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:19:31,087 | INFO | Saving assistant message
+2026-07-22 15:19:31,107 | INFO | Message saved successfully
+2026-07-22 15:19:31,109 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:19:31,112 | INFO | Conversation Saved to PostgreSQL
+2026-07-22 15:19:31,112 | INFO | ============================================================
+2026-07-22 15:19:31,117 | INFO | ============================================================
+2026-07-22 15:19:31,117 | INFO | NEW AI REQUEST
+2026-07-22 15:19:31,118 | INFO | Session ID : test-session
+2026-07-22 15:19:31,119 | INFO | Mode       : general
+2026-07-22 15:19:31,120 | INFO | System Prompt Selected
+2026-07-22 15:19:31,122 | INFO | REDIS HIT : test-session
+2026-07-22 15:19:31,125 | INFO | Conversation Loaded (12 messages)
+2026-07-22 15:19:31,255 | INFO | Sending 14 messages to AI
+2026-07-22 15:20:28,366 | INFO | AI Response Generated
+2026-07-22 15:20:28,381 | INFO | Conversation cached : test-session
+2026-07-22 15:20:28,382 | INFO | Redis Cache Updated
+2026-07-22 15:20:28,385 | INFO | Searching conversation: test-session
+2026-07-22 15:20:28,455 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:20:28,456 | INFO | Saving user message
+2026-07-22 15:20:28,495 | INFO | Message saved successfully
+2026-07-22 15:20:28,496 | INFO | Searching conversation: test-session
+2026-07-22 15:20:28,500 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:20:28,501 | INFO | Saving assistant message
+2026-07-22 15:20:28,517 | INFO | Message saved successfully
+2026-07-22 15:20:28,519 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:20:28,521 | INFO | Conversation Saved to PostgreSQL
+2026-07-22 15:20:28,521 | INFO | ============================================================
+2026-07-22 15:20:28,524 | INFO | ============================================================
+2026-07-22 15:20:28,525 | INFO | NEW AI REQUEST
+2026-07-22 15:20:28,525 | INFO | Session ID : test-session
+2026-07-22 15:20:28,526 | INFO | Mode       : general
+2026-07-22 15:20:28,526 | INFO | System Prompt Selected
+2026-07-22 15:20:28,528 | INFO | REDIS HIT : test-session
+2026-07-22 15:20:28,531 | INFO | Conversation Loaded (14 messages)
+2026-07-22 15:20:28,611 | INFO | Sending 16 messages to AI
+2026-07-22 15:21:24,317 | INFO | AI Response Generated
+2026-07-22 15:21:24,345 | INFO | Conversation cached : test-session
+2026-07-22 15:21:24,348 | INFO | Redis Cache Updated
+2026-07-22 15:21:24,353 | INFO | Searching conversation: test-session
+2026-07-22 15:21:24,502 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:21:24,502 | INFO | Saving user message
+2026-07-22 15:21:24,574 | INFO | Message saved successfully
+2026-07-22 15:21:24,575 | INFO | Searching conversation: test-session
+2026-07-22 15:21:24,578 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:21:24,578 | INFO | Saving assistant message
+2026-07-22 15:21:24,595 | INFO | Message saved successfully
+2026-07-22 15:21:24,596 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:21:24,599 | INFO | Conversation Saved to PostgreSQL
+2026-07-22 15:21:24,600 | INFO | ============================================================
+2026-07-22 15:25:17,637 | INFO | ============================================================
+2026-07-22 15:25:17,639 | INFO | NEW AI REQUEST
+2026-07-22 15:25:17,639 | INFO | Session ID : day37-test
+2026-07-22 15:25:17,639 | INFO | Mode       : backend
+2026-07-22 15:25:17,639 | INFO | System Prompt Selected
+2026-07-22 15:25:17,651 | INFO | REDIS MISS : day37-test
+2026-07-22 15:25:17,652 | INFO | Loading conversation: day37-test
+2026-07-22 15:25:17,652 | INFO | Searching conversation: day37-test
+2026-07-22 15:25:17,705 | INFO | Conversation does not exist
+2026-07-22 15:25:17,706 | INFO | No conversation found
+2026-07-22 15:25:17,706 | INFO | POSTGRES LOADED 0 messages
+2026-07-22 15:25:17,709 | INFO | CACHE REFRESHED
+2026-07-22 15:25:17,712 | INFO | Conversation Loaded (0 messages)
+2026-07-22 15:25:18,352 | INFO | Sending 2 messages to AI
+2026-07-22 15:27:23,781 | INFO | AI Response Generated
+2026-07-22 15:27:23,842 | INFO | Conversation cached : day37-test
+2026-07-22 15:27:23,846 | INFO | Redis Cache Updated
+2026-07-22 15:27:23,883 | INFO | Searching conversation: day37-test
+2026-07-22 15:27:24,205 | INFO | Conversation does not exist
+2026-07-22 15:27:24,215 | INFO | Creating conversation: day37-test
+2026-07-22 15:27:24,611 | INFO | Conversation created successfully
+2026-07-22 15:27:24,615 | INFO | Saving user message
+2026-07-22 15:27:24,747 | INFO | Message saved successfully
+2026-07-22 15:27:24,748 | INFO | Searching conversation: day37-test
+2026-07-22 15:27:24,753 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:27:24,754 | INFO | Saving assistant message
+2026-07-22 15:27:24,777 | INFO | Message saved successfully
+2026-07-22 15:27:24,781 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:27:24,786 | INFO | Conversation Saved to PostgreSQL
+2026-07-22 15:27:24,788 | INFO | ============================================================
+2026-07-22 15:29:48,159 | INFO | ============================================================
+2026-07-22 15:29:48,164 | INFO | STREAMING AI REQUEST
+2026-07-22 15:29:48,165 | INFO | Session ID : day37-test
+2026-07-22 15:29:48,165 | INFO | Mode       : backend
+2026-07-22 15:29:48,166 | INFO | System Prompt Selected
+2026-07-22 15:29:48,180 | INFO | REDIS HIT : day37-test
+2026-07-22 15:29:48,181 | INFO | Conversation Loaded (2 messages)
+2026-07-22 15:29:49,040 | INFO | Sending 4 messages to Ollama
+2026-07-22 15:29:49,041 | INFO | Streaming Started
+2026-07-22 15:29:49,044 | INFO | Connecting to Ollama...
+2026-07-22 15:29:49,069 | INFO | Connected to Ollama
+2026-07-22 15:31:55,467 | INFO | Ollama Stream Finished
+2026-07-22 15:31:55,483 | INFO | Streaming Completed (417 chunks)
+2026-07-22 15:31:55,537 | INFO | Conversation cached : day37-test
+2026-07-22 15:31:55,563 | INFO | Searching conversation: day37-test
+2026-07-22 15:31:55,904 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:31:55,905 | INFO | Saving user message
+2026-07-22 15:31:56,033 | INFO | Message saved successfully
+2026-07-22 15:31:56,034 | INFO | Searching conversation: day37-test
+2026-07-22 15:31:56,038 | INFO | Conversation found in PostgreSQL
+2026-07-22 15:31:56,038 | INFO | Saving assistant message
+2026-07-22 15:31:56,064 | INFO | Message saved successfully
+2026-07-22 15:31:56,065 | INFO | Conversation stored in PostgreSQL
+2026-07-22 15:31:56,069 | INFO | Conversation Saved
+2026-07-22 15:31:56,069 | INFO | ============================================================
+2026-07-22 16:11:47,818 | INFO | ============================================================
+2026-07-22 16:11:47,820 | INFO | STREAMING REQUEST
+2026-07-22 16:11:47,847 | INFO | REDIS MISS : stream-test
+2026-07-22 16:11:47,848 | INFO | Loading conversation: stream-test
+2026-07-22 16:11:47,848 | INFO | Searching conversation: stream-test
+2026-07-22 16:11:48,198 | INFO | Conversation does not exist
+2026-07-22 16:11:48,198 | INFO | No conversation found
+2026-07-22 16:11:48,199 | INFO | POSTGRES LOADED 0 messages
+2026-07-22 16:11:48,201 | INFO | CACHE REFRESHED
+2026-07-22 16:11:48,635 | INFO | Connecting to Ollama...
+2026-07-22 16:11:48,645 | INFO | Connected to Ollama
+2026-07-22 16:14:15,988 | INFO | Ollama Stream Finished
+2026-07-22 16:14:16,233 | INFO | Conversation cached : stream-test
+2026-07-22 16:14:16,284 | INFO | Searching conversation: stream-test
+2026-07-22 16:14:16,986 | INFO | Conversation does not exist
+2026-07-22 16:14:16,989 | INFO | Creating conversation: stream-test
+2026-07-22 16:14:17,762 | INFO | Conversation created successfully
+2026-07-22 16:14:17,766 | INFO | Saving user message
+2026-07-22 16:14:17,963 | INFO | Message saved successfully
+2026-07-22 16:14:17,963 | INFO | Searching conversation: stream-test
+2026-07-22 16:14:17,972 | INFO | Conversation found in PostgreSQL
+2026-07-22 16:14:17,974 | INFO | Saving assistant message
+2026-07-22 16:14:18,026 | INFO | Message saved successfully
+2026-07-22 16:14:18,027 | INFO | Conversation stored in PostgreSQL
+2026-07-22 16:17:54,724 | INFO | ============================================================
+2026-07-22 16:17:54,739 | INFO | NEW AI REQUEST
+2026-07-22 16:17:54,903 | INFO | REDIS MISS : rag-api-test
+2026-07-22 16:17:54,942 | INFO | Loading conversation: rag-api-test
+2026-07-22 16:17:54,944 | INFO | Searching conversation: rag-api-test
+2026-07-22 16:17:55,745 | INFO | Conversation does not exist
+2026-07-22 16:17:55,746 | INFO | No conversation found
+2026-07-22 16:17:55,747 | INFO | POSTGRES LOADED 0 messages
+2026-07-22 16:17:55,762 | INFO | CACHE REFRESHED
+2026-07-22 16:19:25,789 | INFO | Conversation cached : rag-api-test
+2026-07-22 16:19:25,834 | INFO | Searching conversation: rag-api-test
+2026-07-22 16:19:26,112 | INFO | Conversation does not exist
+2026-07-22 16:19:26,113 | INFO | Creating conversation: rag-api-test
+2026-07-22 16:19:26,389 | INFO | Conversation created successfully
+2026-07-22 16:19:26,392 | INFO | Saving user message
+2026-07-22 16:19:26,453 | INFO | Message saved successfully
+2026-07-22 16:19:26,454 | INFO | Searching conversation: rag-api-test
+2026-07-22 16:19:26,461 | INFO | Conversation found in PostgreSQL
+2026-07-22 16:19:26,461 | INFO | Saving assistant message
+2026-07-22 16:19:26,481 | INFO | Message saved successfully
+2026-07-22 16:19:26,483 | INFO | Conversation stored in PostgreSQL
+2026-07-22 16:20:01,590 | INFO | ============================================================
+2026-07-22 16:20:01,592 | INFO | STREAMING REQUEST
+2026-07-22 16:20:01,605 | INFO | REDIS MISS : stream-api-test
+2026-07-22 16:20:01,608 | INFO | Loading conversation: stream-api-test
+2026-07-22 16:20:01,611 | INFO | Searching conversation: stream-api-test
+2026-07-22 16:20:01,621 | INFO | Conversation does not exist
+2026-07-22 16:20:01,622 | INFO | No conversation found
+2026-07-22 16:20:01,622 | INFO | POSTGRES LOADED 0 messages
+2026-07-22 16:20:01,625 | INFO | CACHE REFRESHED
+2026-07-22 16:20:02,078 | INFO | Connecting to Ollama...
+2026-07-22 16:20:02,088 | INFO | Connected to Ollama
+2026-07-22 16:21:44,317 | INFO | Ollama Stream Finished
+2026-07-22 16:21:44,427 | INFO | Conversation cached : stream-api-test
+2026-07-22 16:21:44,452 | INFO | Searching conversation: stream-api-test
+2026-07-22 16:21:44,712 | INFO | Conversation does not exist
+2026-07-22 16:21:44,713 | INFO | Creating conversation: stream-api-test
+2026-07-22 16:21:44,876 | INFO | Conversation created successfully
+2026-07-22 16:21:44,880 | INFO | Saving user message
+2026-07-22 16:21:45,024 | INFO | Message saved successfully
+2026-07-22 16:21:45,026 | INFO | Searching conversation: stream-api-test
+2026-07-22 16:21:45,046 | INFO | Conversation found in PostgreSQL
+2026-07-22 16:21:45,048 | INFO | Saving assistant message
+2026-07-22 16:21:45,098 | INFO | Message saved successfully
+2026-07-22 16:21:45,099 | INFO | Conversation stored in PostgreSQL

@@ -1,0 +1,8 @@
+PostgreSQL is a relational database.
+
+It stores:
+
+- Users
+- AI conversations
+- Notes
+- Application data
