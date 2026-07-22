@@ -1,58 +1,45 @@
-from app.ai.vector_store import search_documents, add_documents
-
-DOCUMENTS = [
-    {
-        "id": "1",
-        "title": "JWT Authentication",
-        "content": """
-JWT (JSON Web Token) is used for stateless authentication.
-It consists of Header, Payload, and Signature.
-JWT is commonly used with FastAPI authentication.
-"""
-    },
-    {
-        "id": "2",
-        "title": "FastAPI",
-        "content": """
-FastAPI is a modern Python web framework.
-It supports asynchronous programming,
-dependency injection,
-automatic OpenAPI documentation,
-and high performance.
-"""
-    },
-    {
-        "id": "3",
-        "title": "Redis",
-        "content": """
-Redis is an in-memory key-value database.
-It is commonly used for caching,
-session storage,
-and conversation history.
-"""
-    },
-    {
-        "id": "4",
-        "title": "PostgreSQL",
-        "content": """
-PostgreSQL is a relational database.
-It stores users,
-notes,
-AI conversations,
-and application data.
-"""
-    }
-]
-
+from app.ai.document_loader import load_text_documents
+from app.ai.vector_store import (
+    add_documents,
+    search_documents
+)
+from app.ai.chunker import chunk_text
 
 def load_knowledge_base():
     """
-    Load all documents into ChromaDB.
+    Load documents, split into chunks,
+    and index them into ChromaDB.
     """
 
-    documents = [doc["content"] for doc in DOCUMENTS]
-    ids = [doc["id"] for doc in DOCUMENTS]
-    metadatas = [{"title": doc["title"]} for doc in DOCUMENTS]
+    docs = load_text_documents()
+
+    if not docs:
+        print("No documents found.")
+        return
+
+    documents = []
+    ids = []
+    metadatas = []
+
+    for doc in docs:
+
+        chunks = chunk_text(doc["content"])
+
+        for index, chunk in enumerate(chunks):
+
+            documents.append(chunk)
+
+            ids.append(
+                f"{doc['id']}_{index}"
+            )
+
+            metadatas.append(
+                {
+                    "title": doc["title"],
+                    "source": doc["source"],
+                    "chunk": index
+                }
+            )
 
     add_documents(
         documents=documents,
@@ -60,10 +47,15 @@ def load_knowledge_base():
         metadatas=metadatas
     )
 
+    print(f"Indexed {len(documents)} chunks.")
 
-def retrieve_context(question: str, top_k: int = 3) -> str:
+
+def retrieve_context(
+    question: str,
+    top_k: int = 3
+):
     """
-    Retrieve relevant context using semantic search.
+    Retrieve semantic context along with metadata.
     """
 
     results = search_documents(
@@ -72,8 +64,33 @@ def retrieve_context(question: str, top_k: int = 3) -> str:
     )
 
     documents = results.get("documents", [])
+    metadatas = results.get("metadatas", [])
 
     if not documents or not documents[0]:
         return ""
 
-    return "\n\n".join(documents[0])
+    context_parts = []
+
+    for doc, metadata in zip(
+        documents[0],
+        metadatas[0]
+    ):
+
+        metadata = metadata or {}
+
+        title = metadata.get("title", "Unknown")
+        source = metadata.get("source", "Unknown")
+        chunk = metadata.get("chunk", 0)
+
+        context_parts.append(
+            f"""
+Title: {title}
+Source: {source}
+Chunk: {chunk}
+
+Content:
+{doc}
+"""
+        )
+
+    return "\n" + "=" * 60 + "\n".join(context_parts)

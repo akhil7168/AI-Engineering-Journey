@@ -1,0 +1,8 @@
+Redis is an in-memory key-value database.
+
+Common use cases:
+
+- Caching
+- Session storage
+- Conversation history
+- Rate limiting

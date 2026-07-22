@@ -25,105 +25,60 @@ from app.core.logging_config import logger
 
 def build_rag_prompt(question: str) -> str:
     """
-    Build a Retrieval-Augmented prompt using semantic search.
+    Build a Retrieval-Augmented prompt.
     """
 
     context = retrieve_context(question)
 
     if not context.strip():
-        context = "No relevant context found."
+        context = "No relevant information was retrieved from the knowledge base."
 
     return f"""
-Use the following context to answer the user's question.
+You are an AI Backend Engineering Assistant.
 
-If the answer is not available in the context,
-answer using your own knowledge and clearly mention
-that it is not present in the knowledge base.
+Instructions:
 
-=====================
-CONTEXT
-=====================
+1. Use the retrieved context whenever possible.
+2. If the context is insufficient, clearly state that and answer from your own knowledge.
+3. Be concise and technically accurate.
+
+==============================
+RETRIEVED CONTEXT
+==============================
 
 {context}
 
-=====================
+==============================
 QUESTION
-=====================
+==============================
 
 {question}
 
-=====================
+==============================
 ANSWER
-=====================
+==============================
 """
 
 
-def generate_ai_response(
-    session_id: str,
-    prompt: str,
-    mode: str = "general"
-):
-    """
-    Complete AI Workflow
-
-    1. Load conversation
-    2. Retrieve semantic context
-    3. Build RAG prompt
-    4. Call AI
-    5. Save conversation
-    """
-
-    logger.info("=" * 60)
-    logger.info("NEW AI REQUEST")
-    logger.info(f"Session ID : {session_id}")
-    logger.info(f"Mode       : {mode}")
-
-    # -------------------------
-    # Select System Prompt
-    # -------------------------
+def get_system_prompt(mode: str) -> str:
 
     if mode == "backend":
-        system_prompt = BACKEND_PROMPT
+        return BACKEND_PROMPT
 
-    elif mode == "python":
-        system_prompt = PYTHON_PROMPT
+    if mode == "python":
+        return PYTHON_PROMPT
 
-    elif mode == "interviewer":
-        system_prompt = INTERVIEWER_PROMPT
+    if mode == "interviewer":
+        return INTERVIEWER_PROMPT
 
-    else:
-        system_prompt = GENERAL_PROMPT
+    return GENERAL_PROMPT
 
-    logger.info("System Prompt Selected")
 
-    # -------------------------
-    # Load Conversation
-    # -------------------------
-
-    conversation = get_conversation(session_id)
-
-    logger.info(
-        f"Conversation Loaded ({len(conversation)} messages)"
-    )
-
-    # -------------------------
-    # Build RAG Prompt
-    # -------------------------
-
-    rag_prompt = build_rag_prompt(prompt)
-
-    # -------------------------
-    # Add User Message
-    # -------------------------
-
-    conversation = add_user_message(
-        conversation,
-        rag_prompt
-    )
-
-    # -------------------------
-    # Prepare Messages
-    # -------------------------
+def build_messages(
+    conversation: list,
+    system_prompt: str,
+    rag_prompt: str
+):
 
     messages = [
         {
@@ -134,15 +89,43 @@ def generate_ai_response(
 
     messages.extend(conversation)
 
-    logger.info(
-        f"Sending {len(messages)} messages to AI"
+    for i in range(len(messages) - 1, -1, -1):
+        if messages[i]["role"] == "user":
+            messages[i]["content"] = rag_prompt
+            break
+
+    return messages
+
+
+def generate_ai_response(
+    session_id: str,
+    prompt: str,
+    mode: str = "general"
+):
+
+    logger.info("=" * 60)
+    logger.info("NEW AI REQUEST")
+
+    system_prompt = get_system_prompt(mode)
+
+    conversation = get_conversation(session_id)
+
+    rag_prompt = build_rag_prompt(prompt)
+
+    conversation = add_user_message(
+        conversation,
+        prompt
+    )
+
+    messages = build_messages(
+        conversation,
+        system_prompt,
+        rag_prompt
     )
 
     try:
 
         response = chat_with_ai(messages)
-
-        logger.info("AI Response Generated")
 
         conversation = add_ai_message(
             conversation,
@@ -154,25 +137,17 @@ def generate_ai_response(
             conversation
         )
 
-        logger.info("Redis Cache Updated")
-
         persist_messages(
             session_id,
             prompt,
             response
         )
 
-        logger.info("Conversation Saved to PostgreSQL")
-
-        logger.info("=" * 60)
-
         return response
 
     except Exception as e:
 
-        logger.error(
-            f"AI Error : {str(e)}"
-        )
+        logger.exception(e)
 
         return "Unable to generate AI response."
 
@@ -182,92 +157,36 @@ def generate_streaming_response(
     prompt: str,
     mode: str = "general"
 ):
-    """
-    Streams AI response while maintaining conversation history.
-    """
 
     logger.info("=" * 60)
-    logger.info("STREAMING AI REQUEST")
-    logger.info(f"Session ID : {session_id}")
-    logger.info(f"Mode       : {mode}")
+    logger.info("STREAMING REQUEST")
 
-    # -------------------------
-    # Select System Prompt
-    # -------------------------
-
-    if mode == "backend":
-        system_prompt = BACKEND_PROMPT
-
-    elif mode == "python":
-        system_prompt = PYTHON_PROMPT
-
-    elif mode == "interviewer":
-        system_prompt = INTERVIEWER_PROMPT
-
-    else:
-        system_prompt = GENERAL_PROMPT
-
-    logger.info("System Prompt Selected")
-
-    # -------------------------
-    # Load Conversation
-    # -------------------------
+    system_prompt = get_system_prompt(mode)
 
     conversation = get_conversation(session_id)
 
-    logger.info(
-        f"Conversation Loaded ({len(conversation)} messages)"
-    )
-
-    # -------------------------
-    # Build RAG Prompt
-    # -------------------------
-
     rag_prompt = build_rag_prompt(prompt)
-
-    # -------------------------
-    # Add User Message
-    # -------------------------
 
     conversation = add_user_message(
         conversation,
+        prompt
+    )
+
+    messages = build_messages(
+        conversation,
+        system_prompt,
         rag_prompt
     )
 
-    # -------------------------
-    # Prepare Messages
-    # -------------------------
-
-    messages = [
-        {
-            "role": "system",
-            "content": system_prompt
-        }
-    ]
-
-    messages.extend(conversation)
-
-    logger.info(
-        f"Sending {len(messages)} messages to Ollama"
-    )
-
     complete_response = ""
-    token_count = 0
 
     try:
-
-        logger.info("Streaming Started")
 
         for token in stream_chat_with_ai(messages):
 
             complete_response += token
-            token_count += 1
 
             yield token
-
-        logger.info(
-            f"Streaming Completed ({token_count} chunks)"
-        )
 
         conversation = add_ai_message(
             conversation,
@@ -285,14 +204,8 @@ def generate_streaming_response(
             complete_response
         )
 
-        logger.info("Conversation Saved")
-
-        logger.info("=" * 60)
-
     except Exception as e:
 
-        logger.error(
-            f"Streaming Error : {str(e)}"
-        )
+        logger.exception(e)
 
         yield "Unable to generate AI response."

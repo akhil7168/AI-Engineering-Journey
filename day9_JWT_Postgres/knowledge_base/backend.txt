@@ -1,0 +1,8 @@
+AI Backend Engineering combines:
+
+- FastAPI
+- PostgreSQL
+- Redis
+- Docker
+- JWT Authentication
+- Retrieval-Augmented Generation

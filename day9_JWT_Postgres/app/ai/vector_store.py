@@ -45,15 +45,18 @@ def search_documents(
 
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=top_k
+        n_results=top_k,
+        include=[
+            "documents",
+            "metadatas",
+            "distances"
+        ]
     )
 
     return results
-
 
 def get_document_count():
     """
     Returns number of indexed documents.
     """
-
     return collection.count()

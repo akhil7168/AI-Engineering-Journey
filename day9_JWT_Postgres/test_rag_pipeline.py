@@ -1,20 +1,26 @@
-from app.ai.retriever import load_knowledge_base, retrieve_context
-from app.services.ai_service import generate_ai_response
+from app.ai.retriever import (
+    load_knowledge_base,
+    retrieve_context
+)
 
-SESSION_ID = "rag-test-session"
+from app.services.ai_service import (
+    generate_ai_response
+)
+
+SESSION_ID = "day37-rag-test"
 
 print("=" * 80)
-print("Loading Knowledge Base...")
+print("LOADING KNOWLEDGE BASE")
 print("=" * 80)
 
 load_knowledge_base()
 
 questions = [
-    "Explain JWT Authentication.",
-    "How does FastAPI work?",
-    "Where are conversations stored?",
-    "What is Redis used for?",
-    "What is PostgreSQL?"
+    "Explain JWT Authentication",
+    "What is Redis?",
+    "Explain FastAPI Dependency Injection",
+    "What does PostgreSQL store?",
+    "What is AI Backend Engineering?"
 ]
 
 for question in questions:
@@ -34,13 +40,13 @@ for question in questions:
     print("\nAI RESPONSE")
     print("-" * 80)
 
-    answer = generate_ai_response(
+    response = generate_ai_response(
         session_id=SESSION_ID,
         prompt=question,
         mode="backend"
     )
 
-    print(answer)
+    print(response)
 
 print("\n")
 print("=" * 80)

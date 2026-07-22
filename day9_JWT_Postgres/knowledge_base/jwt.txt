@@ -1,0 +1,9 @@
+JWT (JSON Web Token) is used for stateless authentication.
+
+A JWT consists of:
+
+- Header
+- Payload
+- Signature
+
+JWT is commonly used in FastAPI authentication systems.
