@@ -1,42 +1,15 @@
 from app.ai.vector_store import (
-    add_documents,
-    search_documents,
+    collection_exists,
+    collection_info,
     get_document_count
 )
 
-documents = [
-    "JWT is used for authentication.",
-    "FastAPI is a Python backend framework.",
-    "Redis stores cached data.",
-    "PostgreSQL is a relational database."
-]
+print("=" * 60)
 
-ids = [
-    "1",
-    "2",
-    "3",
-    "4"
-]
+print("Collection Exists :", collection_exists())
 
-print("Adding documents...")
+print("Document Count    :", get_document_count())
 
-add_documents(
-    documents=documents,
-    ids=ids
-)
+print(collection_info())
 
-print()
-
-print("Documents in DB:", get_document_count())
-
-print()
-
-print("Searching...")
-
-results = search_documents(
-    "Explain JWT Authentication"
-)
-
-print()
-
-print(results)
+print("=" * 60)

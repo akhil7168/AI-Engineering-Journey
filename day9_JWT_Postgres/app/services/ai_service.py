@@ -28,7 +28,10 @@ def build_rag_prompt(question: str) -> str:
     Build a Retrieval-Augmented prompt.
     """
 
-    context = retrieve_context(question)
+    context = retrieve_context(
+    question,
+    top_k=10
+    )
 
     if not context.strip():
         context = "No relevant information was retrieved from the knowledge base."

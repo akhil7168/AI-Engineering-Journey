@@ -8,13 +8,15 @@ questions = [
 
     "FastAPI",
 
-    "PostgreSQL",
-
     "Dependency Injection",
 
-    "Docker",
+    "Database",
 
-    "Machine Learning"
+    "Machine Learning",
+
+    "Weather",
+
+    "Football"
 
 ]
 
@@ -29,6 +31,6 @@ for question in questions:
     if context:
         print(context)
     else:
-        print("No context retrieved.")
+        print("No relevant context found.")
 
     print()

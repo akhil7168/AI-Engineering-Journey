@@ -1,13 +1,14 @@
 from app.ai.document_loader import load_text_documents
-from app.ai.vector_store import (
-    add_documents,
-    search_documents
-)
+from app.ai.vector_store import add_documents
+
+from app.ai.hybrid_search import hybrid_search
 from app.ai.chunker import chunk_text
+from app.ai.context_compressor import compress_context
+
 
 def load_knowledge_base():
     """
-    Load documents, split into chunks,
+    Load documents, split them into chunks,
     and index them into ChromaDB.
     """
 
@@ -17,9 +18,7 @@ def load_knowledge_base():
         print("No documents found.")
         return
 
-    documents = []
-    ids = []
-    metadatas = []
+    indexed_documents = []
 
     for doc in docs:
 
@@ -27,70 +26,43 @@ def load_knowledge_base():
 
         for index, chunk in enumerate(chunks):
 
-            documents.append(chunk)
-
-            ids.append(
-                f"{doc['id']}_{index}"
-            )
-
-            metadatas.append(
+            indexed_documents.append(
                 {
-                    "title": doc["title"],
-                    "source": doc["source"],
-                    "chunk": index
+                    "id": f"{doc['id']}_{index}",
+                    "content": chunk,
+                    "metadata": {
+                        "title": doc["title"],
+                        "source": doc["source"],
+                        "chunk": index
+                    }
                 }
             )
 
-    add_documents(
-        documents=documents,
-        ids=ids,
-        metadatas=metadatas
-    )
+    add_documents(indexed_documents)
 
-    print(f"Indexed {len(documents)} chunks.")
+    print(f"Indexed {len(indexed_documents)} chunks.")
 
 
 def retrieve_context(
     question: str,
-    top_k: int = 3
+    top_k: int = 5,
+    similarity_threshold: float = 0.40
 ):
-    """
-    Retrieve semantic context along with metadata.
-    """
 
-    results = search_documents(
-        query=question,
-        top_k=top_k
+    results = hybrid_search(
+        question,
+        top_k
     )
 
-    documents = results.get("documents", [])
-    metadatas = results.get("metadatas", [])
+    filtered = []
 
-    if not documents or not documents[0]:
+    for result in results:
+
+        if result["final_score"] >= similarity_threshold:
+
+            filtered.append(result)
+
+    if not filtered:
         return ""
 
-    context_parts = []
-
-    for doc, metadata in zip(
-        documents[0],
-        metadatas[0]
-    ):
-
-        metadata = metadata or {}
-
-        title = metadata.get("title", "Unknown")
-        source = metadata.get("source", "Unknown")
-        chunk = metadata.get("chunk", 0)
-
-        context_parts.append(
-            f"""
-Title: {title}
-Source: {source}
-Chunk: {chunk}
-
-Content:
-{doc}
-"""
-        )
-
-    return "\n" + "=" * 60 + "\n".join(context_parts)
+    return compress_context(filtered)
