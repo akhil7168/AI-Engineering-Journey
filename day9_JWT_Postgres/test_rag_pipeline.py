@@ -1,44 +1,65 @@
-from app.ai.retriever import (
-    load_knowledge_base,
-    retrieve_context
-)
+from app.ai.query_expander import expand_query
+from app.ai.hybrid_search import hybrid_search
+from app.ai.context_compressor import compress_context
+from app.services.ai_service import generate_ai_response
 
-from app.services.ai_service import (
-    generate_ai_response
-)
-
-SESSION_ID = "day37-rag-test"
-
-print("=" * 80)
-print("LOADING KNOWLEDGE BASE")
-print("=" * 80)
-
-load_knowledge_base()
+SESSION_ID = "evaluation"
 
 questions = [
+
     "Explain JWT Authentication",
+
     "What is Redis?",
+
     "Explain FastAPI Dependency Injection",
-    "What does PostgreSQL store?",
+
+    "How does PostgreSQL store data?",
+
     "What is AI Backend Engineering?"
+
 ]
 
 for question in questions:
 
-    print("\n" + "=" * 80)
+    print("=" * 100)
     print("QUESTION")
-    print("=" * 80)
+    print("=" * 100)
+
     print(question)
 
-    print("\nRETRIEVED CONTEXT")
-    print("-" * 80)
+    expanded = expand_query(question)
 
-    context = retrieve_context(question)
+    print("\nExpanded Query")
+    print("-" * 100)
 
-    print(context)
+    print(expanded)
 
-    print("\nAI RESPONSE")
-    print("-" * 80)
+    results = hybrid_search(
+        expanded,
+        top_k=5
+    )
+
+    print("\nRetrieved Chunks")
+    print("-" * 100)
+
+    for r in results:
+
+        metadata = r["metadata"] or {}
+
+        print(
+            f"{metadata.get('title')} | "
+            f"{r['final_score']:.3f}"
+        )
+
+    print("\nCompressed Context")
+    print("-" * 100)
+
+    print(
+        compress_context(results)
+    )
+
+    print("\nAI Response")
+    print("-" * 100)
 
     response = generate_ai_response(
         session_id=SESSION_ID,
@@ -48,7 +69,4 @@ for question in questions:
 
     print(response)
 
-print("\n")
-print("=" * 80)
-print("RAG PIPELINE TEST COMPLETED")
-print("=" * 80)
+    print("\n")

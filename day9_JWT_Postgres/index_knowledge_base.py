@@ -1,12 +1,11 @@
+from app.ai.vector_store import reset_collection
 from app.ai.retriever import load_knowledge_base
-from app.ai.vector_store import get_document_count
 
 print("=" * 60)
 print("INDEXING KNOWLEDGE BASE")
 print("=" * 60)
 
+reset_collection()
 load_knowledge_base()
 
-print()
-
-print("Documents stored:", get_document_count())
+print("\nKnowledge base indexed successfully.")

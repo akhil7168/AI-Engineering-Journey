@@ -736,3 +736,81 @@ error loading model: unable to allocate CPU_REPACK buffer (status code: 500)
 2026-07-22 16:21:45,048 | INFO | Saving assistant message
 2026-07-22 16:21:45,098 | INFO | Message saved successfully
 2026-07-22 16:21:45,099 | INFO | Conversation stored in PostgreSQL
+2026-07-23 20:44:19,151 | INFO | Existing collection deleted.
+2026-07-23 20:44:19,189 | INFO | Fresh collection created.
+2026-07-23 20:47:42,471 | INFO | Existing collection deleted.
+2026-07-23 20:47:42,485 | INFO | Fresh collection created.
+2026-07-23 20:47:43,077 | INFO | Indexed 5 document chunks.
+2026-07-23 21:36:27,259 | INFO | ============================================================
+2026-07-23 21:36:27,259 | INFO | NEW AI REQUEST
+2026-07-23 21:36:27,286 | INFO | REDIS MISS : evaluation
+2026-07-23 21:36:27,286 | INFO | Loading conversation: evaluation
+2026-07-23 21:36:27,286 | INFO | Searching conversation: evaluation
+2026-07-23 21:36:27,704 | INFO | Conversation does not exist
+2026-07-23 21:36:27,705 | INFO | No conversation found
+2026-07-23 21:36:27,706 | INFO | POSTGRES LOADED 0 messages
+2026-07-23 21:36:27,708 | INFO | CACHE REFRESHED
+2026-07-23 21:46:07,897 | INFO | Conversation cached : evaluation
+2026-07-23 21:46:08,019 | INFO | Searching conversation: evaluation
+2026-07-23 21:46:09,064 | INFO | Conversation does not exist
+2026-07-23 21:46:09,065 | INFO | Creating conversation: evaluation
+2026-07-23 21:46:09,405 | INFO | Conversation created successfully
+2026-07-23 21:46:09,405 | INFO | Saving user message
+2026-07-23 21:46:09,528 | INFO | Message saved successfully
+2026-07-23 21:46:09,529 | INFO | Searching conversation: evaluation
+2026-07-23 21:46:09,534 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:46:09,534 | INFO | Saving assistant message
+2026-07-23 21:46:09,556 | INFO | Message saved successfully
+2026-07-23 21:46:09,557 | INFO | Conversation stored in PostgreSQL
+2026-07-23 21:46:10,501 | INFO | ============================================================
+2026-07-23 21:46:10,503 | INFO | NEW AI REQUEST
+2026-07-23 21:46:10,518 | INFO | REDIS HIT : evaluation
+2026-07-23 21:49:26,289 | INFO | Conversation cached : evaluation
+2026-07-23 21:49:26,313 | INFO | Searching conversation: evaluation
+2026-07-23 21:49:26,540 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:49:26,543 | INFO | Saving user message
+2026-07-23 21:49:26,658 | INFO | Message saved successfully
+2026-07-23 21:49:26,659 | INFO | Searching conversation: evaluation
+2026-07-23 21:49:26,663 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:49:26,665 | INFO | Saving assistant message
+2026-07-23 21:49:26,700 | INFO | Message saved successfully
+2026-07-23 21:49:26,700 | INFO | Conversation stored in PostgreSQL
+2026-07-23 21:49:27,381 | INFO | ============================================================
+2026-07-23 21:49:27,382 | INFO | NEW AI REQUEST
+2026-07-23 21:49:27,385 | INFO | REDIS HIT : evaluation
+2026-07-23 21:54:57,044 | INFO | Conversation cached : evaluation
+2026-07-23 21:54:57,066 | INFO | Searching conversation: evaluation
+2026-07-23 21:54:57,294 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:54:57,295 | INFO | Saving user message
+2026-07-23 21:54:57,421 | INFO | Message saved successfully
+2026-07-23 21:54:57,421 | INFO | Searching conversation: evaluation
+2026-07-23 21:54:57,426 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:54:57,426 | INFO | Saving assistant message
+2026-07-23 21:54:57,452 | INFO | Message saved successfully
+2026-07-23 21:54:57,453 | INFO | Conversation stored in PostgreSQL
+2026-07-23 21:54:58,108 | INFO | ============================================================
+2026-07-23 21:54:58,108 | INFO | NEW AI REQUEST
+2026-07-23 21:54:58,112 | INFO | REDIS HIT : evaluation
+2026-07-23 21:57:55,369 | INFO | Conversation cached : evaluation
+2026-07-23 21:57:55,391 | INFO | Searching conversation: evaluation
+2026-07-23 21:57:55,621 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:57:55,621 | INFO | Saving user message
+2026-07-23 21:57:55,731 | INFO | Message saved successfully
+2026-07-23 21:57:55,731 | INFO | Searching conversation: evaluation
+2026-07-23 21:57:55,736 | INFO | Conversation found in PostgreSQL
+2026-07-23 21:57:55,738 | INFO | Saving assistant message
+2026-07-23 21:57:55,759 | INFO | Message saved successfully
+2026-07-23 21:57:55,761 | INFO | Conversation stored in PostgreSQL
+2026-07-23 21:57:56,391 | INFO | ============================================================
+2026-07-23 21:57:56,392 | INFO | NEW AI REQUEST
+2026-07-23 21:57:56,394 | INFO | REDIS HIT : evaluation
+2026-07-23 22:01:47,709 | INFO | Conversation cached : evaluation
+2026-07-23 22:01:47,728 | INFO | Searching conversation: evaluation
+2026-07-23 22:01:47,855 | INFO | Conversation found in PostgreSQL
+2026-07-23 22:01:47,855 | INFO | Saving user message
+2026-07-23 22:01:47,916 | INFO | Message saved successfully
+2026-07-23 22:01:47,917 | INFO | Searching conversation: evaluation
+2026-07-23 22:01:47,921 | INFO | Conversation found in PostgreSQL
+2026-07-23 22:01:47,922 | INFO | Saving assistant message
+2026-07-23 22:01:47,947 | INFO | Message saved successfully
+2026-07-23 22:01:47,950 | INFO | Conversation stored in PostgreSQL
