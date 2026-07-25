@@ -3,8 +3,10 @@ from typing import List, Dict
 from app.ai.client import chat_with_ai, stream_chat_with_ai
 from app.ai.retriever import retrieve_context
 
-from app.agents.tool_selector import ToolSelector
-from app.agents.tool_executor import ToolExecutor
+from app.agents.agent_state import AgentState
+from app.agents.planner import Planner
+from app.agents.workflow import WorkflowEngine
+from app.agents.response_generator import ResponseGenerator
 
 from app.services.memory_service import (
     get_conversation,
@@ -14,91 +16,65 @@ from app.services.memory_service import (
     add_ai_message
 )
 
-# --------------------------------------------------
-# Agent Initialization
-# --------------------------------------------------
-
-tool_selector = ToolSelector()
-tool_executor = ToolExecutor()
-
+from app.services.agent_state_service import AgentStateService
 
 # --------------------------------------------------
-# Agent
+# Agent Components
 # --------------------------------------------------
 
-def execute_agent(prompt: str):
+planner = Planner()
+
+workflow = WorkflowEngine()
+
+response_generator = ResponseGenerator()
+
+def execute_agent_workflow(prompt: str):
     """
-    Executes a tool if the user's prompt matches one.
-    Returns None if no suitable tool is found.
+    Executes the complete multi-step agent workflow.
+
+    Planner
+        ↓
+    Workflow Engine
+        ↓
+    Response Generator
     """
 
-    tool = tool_selector.select_tool(prompt)
+    state = AgentState(query=prompt)
 
-    if tool is None:
-        return None
+    planner.create_plan(state)
 
-    # ---------------- Calculator ----------------
+    AgentStateService.save_state(
+    "workflow",
+    state
+    )
 
-    if tool == "calculator":
+    workflow.execute(state)
 
-        expression = (
-            prompt.replace("Calculate", "")
-                  .replace("calculate", "")
-                  .strip()
-        )
+    AgentStateService.save_state(
+    "workflow",
+    state
+    )
 
-        return tool_executor.execute(
-            tool_name="calculator",
-            expression=expression
-        )
+    response = response_generator.generate(state)
 
-    # ---------------- Date & Time ----------------
+    AgentStateService.save_state(
+    "workflow",
+    state
+    )
 
-    elif tool == "datetime":
+    return {
 
-        lower = prompt.lower()
+        "state": state,
 
-        if "utc" in lower:
-            action = "utc"
+        "response": response,
 
-        elif "date" in lower:
-            action = "date"
+        "planned_tools": state.planned_tools,
 
-        elif "day" in lower:
-            action = "day"
+        "completed_tools": state.completed_tools,
 
-        elif "timestamp" in lower:
-            action = "timestamp"
+        "errors": state.errors
 
-        elif "iso" in lower:
-            action = "iso"
-
-        else:
-            action = "time"
-
-        return tool_executor.execute(
-            tool_name="datetime",
-            action=action
-        )
-
-    # ---------------- Document Search ----------------
-
-    elif tool == "document_search":
-
-        return tool_executor.execute(
-            tool_name="document_search",
-            query=prompt
-        )
-
-    # ---------------- System Info ----------------
-
-    elif tool == "system_info":
-
-        return tool_executor.execute(
-            tool_name="system_info"
-        )
-
-    return None
+    }
 
 
 # --------------------------------------------------
@@ -178,6 +154,10 @@ def build_messages(
 # AI Response
 # --------------------------------------------------
 
+# --------------------------------------------------
+# AI Response
+# --------------------------------------------------
+
 def generate_ai_response(
     session_id: str,
     prompt: str,
@@ -185,34 +165,52 @@ def generate_ai_response(
 ):
     """
     Main AI response pipeline.
+
+    Flow
+
+    User
+        ↓
+    Planner
+        ↓
+    Workflow Engine
+        ↓
+    Response Generator
+        ↓
+    OR
+        ↓
+    RAG + LLM
     """
 
     # --------------------------------------------------
-    # Agent Tools
+    # Execute Planner + Workflow
     # --------------------------------------------------
 
-    agent_response = execute_agent(prompt)
+    workflow_result = execute_agent_workflow(prompt)
 
-    if (
-        agent_response
-        and agent_response.get("success")
-        and agent_response.get("tool") != "document_search"
-    ):
+    state = workflow_result["state"]
 
-        output = agent_response["output"]
+    # --------------------------------------------------
+    # If at least one real tool executed,
+    # return the combined response.
+    # --------------------------------------------------
 
-        if isinstance(output, dict):
+    real_tools = [
 
-            if "result" in output:
-                response = str(output["result"])
-            else:
-                response = str(output)
+        tool
 
-        else:
+        for tool in state.completed_tools
 
-            response = str(output)
+        if tool != "llm"
 
-        conversation = get_conversation(session_id)
+    ]
+
+    if len(real_tools) > 0:
+
+        response = workflow_result["response"]
+
+        conversation = get_conversation(
+            session_id
+        )
 
         conversation = add_user_message(
             conversation,
@@ -238,16 +236,12 @@ def generate_ai_response(
         return response
 
     # --------------------------------------------------
-    # Conversation
+    # Fallback to RAG + LLM
     # --------------------------------------------------
 
     conversation = get_conversation(
         session_id
     )
-
-    # --------------------------------------------------
-    # Retrieve Knowledge
-    # --------------------------------------------------
 
     context = retrieve_context(
         prompt,
@@ -255,31 +249,23 @@ def generate_ai_response(
     )
 
     rag_prompt = build_rag_prompt(
-        prompt,
-        context
+        question=prompt,
+        context=context
     )
-
-    # --------------------------------------------------
-    # Build Messages
-    # --------------------------------------------------
 
     messages = build_messages(
-        system_prompt=get_system_prompt(mode),
-        conversation=conversation,
-        user_prompt=rag_prompt
-    )
 
-    # --------------------------------------------------
-    # Call Ollama
-    # --------------------------------------------------
+        system_prompt=get_system_prompt(mode),
+
+        conversation=conversation,
+
+        user_prompt=rag_prompt
+
+    )
 
     response = chat_with_ai(
         messages
     )
-
-    # --------------------------------------------------
-    # Update Memory
-    # --------------------------------------------------
 
     conversation = add_user_message(
         conversation,
@@ -308,6 +294,10 @@ def generate_ai_response(
 # Streaming AI Response
 # --------------------------------------------------
 
+# --------------------------------------------------
+# Streaming AI Response
+# --------------------------------------------------
+
 def generate_streaming_response(
     session_id: str,
     prompt: str,
@@ -320,46 +310,47 @@ def generate_streaming_response(
 
     User
         ↓
-    Tool Selector
+    Planner
         ↓
-    Tool
+    Workflow Engine
+        ↓
+    Response Generator
         ↓
     OR
         ↓
-    RAG
-        ↓
-    Ollama Streaming
+    RAG + Ollama Streaming
     """
 
     # --------------------------------------------------
-    # Agent Tools
+    # Execute Planner + Workflow
     # --------------------------------------------------
 
-    agent_response = execute_agent(prompt)
+    workflow_result = execute_agent_workflow(prompt)
 
-    if (
-        agent_response
-        and agent_response.get("success")
-        and agent_response.get("tool") != "document_search"
-    ):
+    state = workflow_result["state"]
 
-        output = agent_response["output"]
+    # --------------------------------------------------
+    # If at least one real tool executed,
+    # return the combined response immediately.
+    # --------------------------------------------------
 
-        if isinstance(output, dict):
+    real_tools = [
 
-            if "result" in output:
+        tool
 
-                response = str(output["result"])
+        for tool in state.completed_tools
 
-            else:
+        if tool != "llm"
 
-                response = str(output)
+    ]
 
-        else:
+    if len(real_tools) > 0:
 
-            response = str(output)
+        response = workflow_result["response"]
 
-        conversation = get_conversation(session_id)
+        conversation = get_conversation(
+            session_id
+        )
 
         conversation = add_user_message(
             conversation,
@@ -435,7 +426,7 @@ def generate_streaming_response(
         yield token
 
     # --------------------------------------------------
-    # Update Conversation
+    # Save Conversation
     # --------------------------------------------------
 
     conversation = add_user_message(
