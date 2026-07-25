@@ -910,3 +910,97 @@ error loading model: unable to allocate CPU_REPACK buffer (status code: 500)
 2026-07-24 21:40:06,478 | INFO | Saving assistant message
 2026-07-24 21:40:06,501 | INFO | Message saved successfully
 2026-07-24 21:40:06,502 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:39,309 | INFO | REDIS MISS : agent
+2026-07-25 20:59:39,310 | INFO | Loading conversation: agent
+2026-07-25 20:59:39,311 | INFO | Searching conversation: agent
+2026-07-25 20:59:39,753 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:39,798 | INFO | 16 messages loaded
+2026-07-25 20:59:39,798 | INFO | POSTGRES LOADED 16 messages
+2026-07-25 20:59:39,800 | INFO | CACHE REFRESHED
+2026-07-25 20:59:39,803 | INFO | Conversation cached : agent
+2026-07-25 20:59:39,804 | INFO | Searching conversation: agent
+2026-07-25 20:59:39,809 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:39,811 | INFO | Saving user message
+2026-07-25 20:59:39,883 | INFO | Message saved successfully
+2026-07-25 20:59:39,884 | INFO | Searching conversation: agent
+2026-07-25 20:59:39,889 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:39,890 | INFO | Saving assistant message
+2026-07-25 20:59:39,903 | INFO | Message saved successfully
+2026-07-25 20:59:39,903 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,116 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,117 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,118 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,128 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,128 | INFO | Saving user message
+2026-07-25 20:59:40,140 | INFO | Message saved successfully
+2026-07-25 20:59:40,141 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,143 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,144 | INFO | Saving assistant message
+2026-07-25 20:59:40,155 | INFO | Message saved successfully
+2026-07-25 20:59:40,156 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,487 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,489 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,489 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,493 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,493 | INFO | Saving user message
+2026-07-25 20:59:40,503 | INFO | Message saved successfully
+2026-07-25 20:59:40,503 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,505 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,505 | INFO | Saving assistant message
+2026-07-25 20:59:40,513 | INFO | Message saved successfully
+2026-07-25 20:59:40,515 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,517 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,518 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,518 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,521 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,521 | INFO | Saving user message
+2026-07-25 20:59:40,531 | INFO | Message saved successfully
+2026-07-25 20:59:40,532 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,533 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,534 | INFO | Saving assistant message
+2026-07-25 20:59:40,542 | INFO | Message saved successfully
+2026-07-25 20:59:40,543 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,587 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,589 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,590 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,594 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,594 | INFO | Saving user message
+2026-07-25 20:59:40,601 | INFO | Message saved successfully
+2026-07-25 20:59:40,601 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,604 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,604 | INFO | Saving assistant message
+2026-07-25 20:59:40,614 | INFO | Message saved successfully
+2026-07-25 20:59:40,614 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,669 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,670 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,670 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,675 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,675 | INFO | Saving user message
+2026-07-25 20:59:40,684 | INFO | Message saved successfully
+2026-07-25 20:59:40,684 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,687 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,687 | INFO | Saving assistant message
+2026-07-25 20:59:40,698 | INFO | Message saved successfully
+2026-07-25 20:59:40,699 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,797 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,798 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,798 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,803 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,804 | INFO | Saving user message
+2026-07-25 20:59:40,815 | INFO | Message saved successfully
+2026-07-25 20:59:40,816 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,818 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,818 | INFO | Saving assistant message
+2026-07-25 20:59:40,831 | INFO | Message saved successfully
+2026-07-25 20:59:40,832 | INFO | Conversation stored in PostgreSQL
+2026-07-25 20:59:40,900 | INFO | REDIS HIT : agent
+2026-07-25 20:59:40,902 | INFO | Conversation cached : agent
+2026-07-25 20:59:40,903 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,908 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,909 | INFO | Saving user message
+2026-07-25 20:59:40,917 | INFO | Message saved successfully
+2026-07-25 20:59:40,918 | INFO | Searching conversation: agent
+2026-07-25 20:59:40,920 | INFO | Conversation found in PostgreSQL
+2026-07-25 20:59:40,920 | INFO | Saving assistant message
+2026-07-25 20:59:40,931 | INFO | Message saved successfully
+2026-07-25 20:59:40,932 | INFO | Conversation stored in PostgreSQL
