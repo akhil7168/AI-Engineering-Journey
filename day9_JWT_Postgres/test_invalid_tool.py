@@ -1,13 +1,24 @@
-from app.agents.tool_executor import ToolExecutor
+from app.agents.llm_planner import LLMPlanner
 
-executor = ToolExecutor()
+planner = LLMPlanner()
 
-print(
+response = """
+{
+    "tools":[
+        {
+            "name":"weather",
+            "arguments":{}
+        },
+        {
+            "name":"calculator",
+            "arguments":{
+                "expression":"15*9"
+            }
+        }
+    ]
+}
+"""
 
-    executor.execute(
+plan = planner.parse_response(response)
 
-        "weather"
-
-    )
-
-)
+print(plan)

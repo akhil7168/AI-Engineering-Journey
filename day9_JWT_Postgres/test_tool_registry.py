@@ -1,15 +1,17 @@
-from app.agents.tool_registry import list_tools
+from app.agents.tool_registry import ToolRegistry
 
-print("=" * 60)
+registry = ToolRegistry()
 
-print("REGISTERED TOOLS")
+print("=" * 70)
 
-print("=" * 60)
+print("AVAILABLE TOOLS")
 
-for tool in list_tools():
+print("=" * 70)
+
+print()
+
+for tool in registry.get_all_tools().values():
+
+    print(tool)
 
     print()
-
-    print(tool["name"])
-
-    print(tool["description"])

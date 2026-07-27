@@ -1,0 +1,5 @@
+2026-07-27 21:44:17,193 {"query": "Calculate 250*42", "planner_type": "rule", "planning_time_ms": 0.04, "tool_count": 1, "planned_tools": ["calculator"], "invalid_tools": [], "status": "planned", "errors": []}
+2026-07-27 21:44:17,194 {"query": "What is JWT?", "planner_type": "rule", "planning_time_ms": 0.04, "tool_count": 1, "planned_tools": ["document_search"], "invalid_tools": [], "status": "planned", "errors": []}
+2026-07-27 21:44:17,194 {"query": "Show CPU usage", "planner_type": "rule", "planning_time_ms": 0.02, "tool_count": 2, "planned_tools": ["document_search", "system_info"], "invalid_tools": [], "status": "planned", "errors": []}
+2026-07-27 21:44:17,194 {"query": "Today's date", "planner_type": "rule", "planning_time_ms": 0.03, "tool_count": 1, "planned_tools": ["datetime"], "invalid_tools": [], "status": "planned", "errors": []}
+2026-07-27 21:44:17,195 {"query": "Explain AI", "planner_type": "rule", "planning_time_ms": 0.03, "tool_count": 1, "planned_tools": ["document_search"], "invalid_tools": [], "status": "planned", "errors": []}

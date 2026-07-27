@@ -41,7 +41,7 @@ def execute_agent_workflow(prompt: str):
 
     state = AgentState(query=prompt)
 
-    planner.create_plan(state)
+    planner.create_dynamic_plan(state)
 
     AgentStateService.save_state(
     "workflow",
