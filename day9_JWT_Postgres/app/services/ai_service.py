@@ -263,9 +263,7 @@ def generate_ai_response(
 
     )
 
-    response = chat_with_ai(
-        messages
-    )
+    response = chat_with_ai(messages)
 
     conversation = add_user_message(
         conversation,
