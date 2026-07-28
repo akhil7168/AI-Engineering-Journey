@@ -5,6 +5,7 @@ from app.core.logging_config import logger
 MODEL_NAME = "gemma2:2b"
 
 
+
 def chat_with_ai(messages: list):
     """
     Normal AI response.
